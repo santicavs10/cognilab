@@ -17,12 +17,12 @@ const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
       {specialties.map((s, i) => (
         <article class="specialty-card" style={`--accent: ${accents[i % accents.length]}`} data-reveal>
           <div class="specialty-header">
+            <h3>{s.title}</h3>
             <span
               class="specialty-icon"
               style={`--icon: url('${base}/images/iconos/${s.icon}.png'); --float-delay: ${i * -2.5}s`}
               aria-hidden="true"
             />
-            <h3>{s.title}</h3>
           </div>
           <p>{s.description}</p>
         </article>
@@ -34,7 +34,14 @@ const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
       <div class="specialty-links" aria-hidden="true">
         {specialties.map((_, i) => <span style={`--accent: ${accents[i % accents.length]}`} />)}
       </div>
-      <p class="specialty-shared__text">{specialtiesShared}</p>
+      <div class="specialty-shared__box">
+        <span
+          class="specialty-icon specialty-icon--shared"
+          style={`--icon: url('${base}/images/iconos/superacion.png'); --float-delay: -1.2s`}
+          aria-hidden="true"
+        />
+        <p class="specialty-shared__text">{specialtiesShared}</p>
+      </div>
     </div>
   </div>
 </section>
@@ -47,6 +54,7 @@ const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
   }
 
   .specialty-card {
+    position: relative;
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
     border-top: 0.45rem solid var(--accent);
@@ -55,9 +63,11 @@ const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
     padding: 1.5rem;
   }
 
+  /* Materia a la izquierda, ícono contra el margen derecho */
   .specialty-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1rem;
   }
@@ -123,23 +133,43 @@ const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
     background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 35%, transparent));
   }
 
-  .specialty-shared__text {
+  .specialty-shared__box {
     position: relative;
-    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
     padding: 1.6rem 2rem 1.35rem;
     overflow: hidden;
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-soft);
+  }
+
+  .specialty-shared__text {
+    max-width: 44rem;
+    margin: 0;
     color: var(--color-text);
     font-weight: 500;
     line-height: 1.65;
-    text-align: center;
+  }
+
+  /* Ícono común en el degradé de las dos especialidades */
+  .specialty-icon--shared {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary) 12%, white),
+      color-mix(in srgb, var(--color-secondary-strong) 12%, white)
+    );
+  }
+
+  .specialty-icon--shared::before {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary-strong));
   }
 
   /* Franja superior en degradé: los colores de las dos especialidades */
-  .specialty-shared__text::before {
+  .specialty-shared__box::before {
     content: '';
     position: absolute;
     inset: 0 0 auto;
@@ -152,7 +182,19 @@ const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
       grid-template-columns: 1fr;
     }
 
-    /* Tarjetas una debajo de la otra: el conector baja de la última */
+    /* Tarjetas una debajo de la otra: una línea continua las une entre sí y con el bloque común */
+    .specialty-card:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 1px);
+      width: 3px;
+      height: 1.5rem;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: linear-gradient(var(--color-primary), var(--color-secondary-strong));
+    }
+
     .specialty-links {
       grid-template-columns: 1fr;
     }
@@ -163,8 +205,11 @@ const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
   }
 
   @media (max-width: 600px) {
-    .specialty-shared__text {
+    .specialty-shared__box {
+      flex-direction: column;
+      gap: 1rem;
       padding: 1.5rem 1.25rem 1.25rem;
+      text-align: center;
     }
   }
 
