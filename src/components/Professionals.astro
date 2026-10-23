@@ -33,8 +33,8 @@ const accents = [
           </div>
 
           <div class="team-info">
-            <p class="role">{professional.role}</p>
             <h3>{professional.name}</h3>
+            <p class="role">{professional.role}</p>
             <p class="bio">{professional.bio}</p>
           </div>
         </li>
@@ -51,7 +51,7 @@ const accents = [
   }
 
   .team-list {
-    max-width: 52rem;
+    max-width: 54rem;
     margin: 0 auto;
     padding: 0;
     list-style: none;
@@ -59,10 +59,10 @@ const accents = [
 
   .team-member {
     display: grid;
-    grid-template-columns: 14rem 1fr;
+    grid-template-columns: 16rem 1fr;
     align-items: center;
-    gap: 2.25rem;
-    padding: 2rem 0;
+    gap: 2.75rem;
+    padding: 2.25rem 0;
     border-bottom: 1px solid var(--color-border);
   }
 
@@ -72,10 +72,10 @@ const accents = [
 
   /* Foto circular con borde blanco y un anillo fino del color de la marca */
   .team-photo {
-    width: 14rem;
+    width: 16rem;
     aspect-ratio: 1;
     border-radius: 50%;
-    padding: 5px;
+    padding: 6px;
     background: var(--color-surface);
     box-shadow: 0 0 0 3px var(--accent), var(--shadow-soft);
     overflow: hidden;
@@ -93,57 +93,45 @@ const accents = [
     transform: scale(1.04);
   }
 
-  .team-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  .team-info h3 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--color-text);
   }
 
   .role {
-    align-self: flex-start;
-    margin: 0;
-    padding: 0.35rem 0.8rem;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--accent) 16%, white);
-    color: var(--color-text);
-    font-size: 0.88rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .team-info h3 {
-    margin: 0;
-    font-size: 1.45rem;
+    margin: 0.35rem 0 0;
+    font-size: 1.1rem;
     color: var(--color-text);
   }
 
   .bio {
-    margin: 0;
+    margin: 0.85rem 0 0;
     color: var(--color-muted);
     font-size: 0.95rem;
     line-height: 1.6;
   }
 
-  /* ─── Responsive ─────────────────────────────────────── */
+  /* ─── Celular: foto grande arriba, texto centrado debajo ─── */
   @media (max-width: 600px) {
     .team-member {
       grid-template-columns: 1fr;
       justify-items: center;
       gap: 1.25rem;
-      padding: 1.75rem 0;
+      padding: 2rem 0;
       text-align: center;
     }
 
     .team-photo {
-      width: 12rem;
-    }
-
-    .role {
-      align-self: center;
+      width: min(80vw, 20rem);
     }
 
     .team-info h3 {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
+    }
+
+    .role {
+      font-size: 1.05rem;
     }
   }
 
