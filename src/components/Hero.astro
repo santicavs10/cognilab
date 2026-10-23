@@ -5,9 +5,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <section id="inicio" class="hero section">
   <div class="container hero-grid">
-    <div class="hero-content" data-reveal>
-      <h1>{siteConfig.name}</h1>
-      <p class="hero-description">{siteConfig.description}</p>
+    <div class="hero-content">
+      <h1 data-reveal>{siteConfig.name}</h1>
+      <p class="hero-description" data-reveal>{siteConfig.description}</p>
     </div>
 
     <div class="hero-card" data-reveal>
@@ -77,15 +77,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       padding-top: 2rem;
     }
 
+    /* Título → foto → texto: el bloque de texto se "abre" para intercalar la foto */
+    .hero-grid {
+      gap: 1.5rem;
+    }
+
     .hero-content {
+      display: contents;
+    }
+
+    .hero-content h1 {
       order: 1;
-      max-width: 100%;
+      margin: 0;
     }
 
     .hero-card {
       order: 2;
       height: 42vh;
       min-height: 280px;
+    }
+
+    .hero-description {
+      order: 3;
+      max-width: 100%;
+      margin: 0;
     }
   }
 
