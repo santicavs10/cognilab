@@ -134,10 +134,69 @@ export const professionals = [
   }
 ];
 
+// Cada foto tiene una versión de 1600px (src) y otra de 800px con sufijo -800
 export const gallery = [
-  '/images/espacio-1.jpg',
-  '/images/espacio-2.jpg',
-  '/images/espacio-3.jpg'
+  // Mismo número y orden que en banco-imagenes. En la 7 se desenfocaron los nombres de los chicos
+  {
+    src: '/images/nuestro-espacio-1.jpg',
+    alt: 'Consultorio luminoso con escritorio blanco, lápices de colores y alfombra con un arcoíris'
+  },
+  {
+    src: '/images/nuestro-espacio-2.jpg',
+    alt: 'Consultorio con escritorio, sillas y materiales de trabajo, visto desde la puerta azul'
+  },
+  {
+    src: '/images/nuestro-espacio-3.jpg',
+    alt: 'Sala de espera con dos sillones de madera y el logo de CogniLab en la pared'
+  },
+  {
+    src: '/images/nuestro-espacio-4.jpg',
+    alt: 'Consultorio con escritorio blanco y sillas, visto desde la puerta amarilla'
+  },
+  {
+    src: '/images/nuestro-espacio-5.jpg',
+    alt: 'Pasillo con puertas de colores, sillas de espera y el Rincón de Logros al fondo'
+  },
+  {
+    src: '/images/nuestro-espacio-6.jpg',
+    alt: 'Rincón de Logros: pared con letras de colores y dibujos colgados, entre una puerta azul y una amarilla'
+  },
+  {
+    src: '/images/nuestro-espacio-7.jpg',
+    alt: 'Notas y dibujos con logros colgados con broches de colores en el Rincón de Logros'
+  },
+  {
+    src: '/images/nuestro-espacio-8.jpg',
+    alt: 'Consultorio visto desde la puerta verde, con escritorio blanco y materiales didácticos'
+  },
+  {
+    src: '/images/nuestro-espacio-9.jpg',
+    alt: 'Mesa con tarjetas de números y recipientes con fichas de colores para actividades'
+  },
+  {
+    src: '/images/nuestro-espacio-10.jpg',
+    alt: 'Consultorio con mesa de trabajo, juegos didácticos y lapiceros de colores'
+  },
+  {
+    src: '/images/nuestro-espacio-11.jpg',
+    alt: 'Lapiceros con forma de lápiz llenos de lápices y marcadores de colores sobre un escritorio'
+  },
+  {
+    src: '/images/nuestro-espacio-12.jpg',
+    alt: 'Libros de trabajo y lapiceros con lápices de colores sobre un mueble blanco'
+  },
+  {
+    src: '/images/nuestro-espacio-13.jpg',
+    alt: 'Cuaderno abierto con un dibujo de vacaciones, junto a lápices y marcadores de colores'
+  },
+  {
+    src: '/images/nuestro-espacio-14.jpg',
+    alt: 'Juego de encastre con aros de colores y un lapicero en forma de lápiz sobre la mesa'
+  },
+  {
+    src: '/images/nuestro-espacio-15.jpg',
+    alt: 'Logo de CogniLab en letras de colores sobre una pared blanca'
+  }
 ];
 
 export const faqs = [

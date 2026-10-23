@@ -6,12 +6,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <section id="inicio" class="hero section">
   <div class="container hero-grid">
     <div class="hero-content">
-      <h2>{siteConfig.name}</h1>
+      <h1>{siteConfig.name}</h1>
       <p class="hero-description">{siteConfig.description}</p>
     </div>
 
     <div class="hero-card">
-      <img src={`${base}/images/hero-espacio.jpg`} alt="Espacio del centro" />
+      <img
+        src={`${base}/images/nuestro-enfoque.jpg`}
+        alt="Escritorio de trabajo de CogniLab con materiales de evaluación, juegos didácticos y un cuaderno con el logo"
+        width="889"
+        height="1333"
+      />
     </div>
   </div>
 </section>
@@ -33,13 +38,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     max-width: 640px;
   }
 
+  /* Mismo tamaño que un h2 global: el título se achicó a propósito */
   .hero-content h1 {
-    font-family: var(--font-heading);
-    font-size: clamp(2.4rem, 4vw, 4.4rem);
-    line-height: 1.05;
-    color: var(--color-text);
-    margin-bottom: 1rem;
-    max-width: 12ch;
+    font-size: clamp(2rem, 3vw, 3.2rem);
   }
 
   .hero-description {
@@ -81,10 +82,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       max-width: 100%;
     }
 
-    .hero-content h1 {
-      max-width: 100%;
-    }
-
     .hero-card {
       order: 2;
       height: 42vh;
@@ -95,10 +92,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   @media (max-width: 600px) {
     .hero {
       padding: 3rem 0 4rem;
-    }
-
-    .hero-content h1 {
-      font-size: clamp(2.2rem, 9vw, 3.4rem);
     }
 
     .hero-description {
