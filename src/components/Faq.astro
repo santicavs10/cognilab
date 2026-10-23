@@ -5,14 +5,14 @@ import Eyebrow from './Eyebrow.astro';
 
 <section class="section section--alt" id="preguntas">
   <div class="container narrow">
-    <div class="section-heading section-heading--center">
+    <div class="section-heading section-heading--center" data-reveal>
       <Eyebrow label="Preguntas frecuentes" />
       <h2>Información útil antes de contactarnos</h2>
     </div>
 
     <div class="faq-list">
       {faqs.map((item) => (
-        <details class="faq-item">
+        <details class="faq-item" data-reveal>
           <summary>{item.question}</summary>
           <p>{item.answer}</p>
         </details>

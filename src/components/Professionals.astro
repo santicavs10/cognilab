@@ -5,11 +5,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <section class="section section--alt" id="profesionales">
   <div class="container">
-    <div class="section-heading section-heading--center">
+    <div class="section-heading section-heading--center" data-reveal>
       <h2 class="section-title">Nuestro equipo</h2>
     </div>
 
-    <div class="profile-grid" id="profile-carousel">
+    <!-- Aparece entero: en celular es un carrusel horizontal y las tarjetas de la derecha no entran en pantalla al bajar -->
+    <div class="profile-grid" id="profile-carousel" data-reveal>
       {professionals.map((professional) => (
         <article class="profile-card">
           <div class="profile-image-wrap">

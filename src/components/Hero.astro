@@ -5,12 +5,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <section id="inicio" class="hero section">
   <div class="container hero-grid">
-    <div class="hero-content">
+    <div class="hero-content" data-reveal>
       <h1>{siteConfig.name}</h1>
       <p class="hero-description">{siteConfig.description}</p>
     </div>
 
-    <div class="hero-card">
+    <div class="hero-card" data-reveal>
       <img
         src={`${base}/images/nuestro-enfoque.jpg`}
         alt="Escritorio de trabajo de CogniLab con materiales de evaluación, juegos didácticos y un cuaderno con el logo"

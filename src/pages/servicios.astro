@@ -23,9 +23,9 @@ const accentColors = [
   <main>
     <section class="services-detail section">
       <div class="container">
-        <h1 class="page-title">Servicios</h1>
+        <h1 class="page-title" data-reveal>Servicios</h1>
         {services.map((service, i) => (
-          <article id={service.slug} class="service-item" style={`--accent: ${accentColors[i % accentColors.length]}`}>
+          <article id={service.slug} class="service-item" style={`--accent: ${accentColors[i % accentColors.length]}`} data-reveal>
             <div class="service-item-header">
               <div class="service-accent-bar"></div>
               <h2>{service.title}</h2>

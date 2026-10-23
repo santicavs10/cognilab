@@ -77,6 +77,13 @@ const schemaOrg = {
     <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Tilt+Neon&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" href={`${base}/logos/favicon.svg`} />
     <link rel="apple-touch-icon" href={`${base}/logos/favicon.svg`} />
+
+    <!-- Activa la aparición al desplazar antes de pintar, para que no haya parpadeo -->
+    <script is:inline>
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('reveal-on');
+      }
+    </script>
   </head>
   <body>
     <slot />
@@ -109,6 +116,25 @@ const schemaOrg = {
         </svg>
       </a>
     </div>}
+
+    <script is:inline>
+      if (document.documentElement.classList.contains('reveal-on')) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            // Los que entran juntos (por ejemplo, una fila de tarjetas) aparecen uno tras otro
+            entries
+              .filter((entry) => entry.isIntersecting)
+              .forEach((entry, i) => {
+                entry.target.style.setProperty('--reveal-delay', `${Math.min(i, 5) * 90}ms`);
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -8% 0px' }
+        );
+        document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+      }
+    </script>
   </body>
 </html>
 
