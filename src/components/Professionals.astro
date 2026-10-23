@@ -1,6 +1,15 @@
 ---
 import { professionals } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Anillo de cada foto con un color de la marca, en orden
+const accents = [
+  'var(--color-primary)',
+  'var(--color-secondary-strong)',
+  'var(--color-purple)',
+  'var(--color-pink)',
+  'var(--color-orange)'
+];
 ---
 
 <section class="section section--alt" id="profesionales">
@@ -10,8 +19,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
 
     <ul class="team-list">
-      {professionals.map((professional) => (
-        <li class="team-member" data-reveal>
+      {professionals.map((professional, i) => (
+        <li class="team-member" style={`--accent: ${accents[i % accents.length]}`} data-reveal>
           <div class="team-photo">
             <img
               src={`${base}${professional.image}`}
