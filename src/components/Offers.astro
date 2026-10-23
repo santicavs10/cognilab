@@ -2,6 +2,17 @@
 import { services } from '../data/site';
 import Eyebrow from './Eyebrow.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Color de cada tarjeta y de su ventana de detalle, en el mismo orden que services
+const accents = [
+  'var(--color-primary)',
+  'var(--color-secondary-strong)',
+  'var(--color-purple)',
+  'var(--color-pink)',
+  'var(--color-orange)',
+  'var(--color-secondary)'
+];
+const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
 ---
 
 <section class="section">
@@ -11,16 +22,70 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <h2>¿Qué ofrecemos en CogniLab?</h2>
     </div>
     <div class="offer-grid">
-      {services.map((s) => (
-        <article class="offer-card">
+      {services.map((s, i) => (
+        <article class="offer-card" style={accentFor(i)}>
           <h3>{s.title}</h3>
           <p>{s.description}</p>
-          <a href={`${base}/servicios#${s.slug}`} class="btn-info">+ info</a>
+          <a
+            href={`${base}/servicios#${s.slug}`}
+            class="btn-info"
+            data-service-dialog={`servicio-${s.slug}`}
+            aria-haspopup="dialog"
+          >
+            + info<span class="visually-hidden"> sobre {s.title}</span>
+          </a>
         </article>
       ))}
     </div>
   </div>
+
+  {services.map((s, i) => (
+    <dialog
+      class="service-dialog"
+      id={`servicio-${s.slug}`}
+      style={accentFor(i)}
+      aria-labelledby={`servicio-${s.slug}-titulo`}
+    >
+      <div class="service-dialog__card">
+        <button class="service-dialog__close" type="button" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+
+        <h2 class="service-dialog__title" id={`servicio-${s.slug}-titulo`}>{s.title}</h2>
+        <p class="service-dialog__lead">{s.description}</p>
+        <p class="service-dialog__details">{s.details}</p>
+
+        <div class="service-dialog__for-whom">
+          <p class="service-dialog__label">¿Para quién?</p>
+          <ul>
+            {s.forWhom.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </dialog>
+  ))}
 </section>
+
+<script>
+  const triggers = document.querySelectorAll<HTMLAnchorElement>('[data-service-dialog]');
+
+  triggers.forEach((trigger) => {
+    const dialog = document.getElementById(trigger.dataset.serviceDialog ?? '') as HTMLDialogElement | null;
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      dialog.showModal();
+    });
+
+    dialog.querySelector('.service-dialog__close')?.addEventListener('click', () => dialog.close());
+
+    // Tocar fuera de la tarjeta (sobre el fondo oscurecido) cierra la ventana
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  });
+</script>
 
 <style>
   .offer-grid {
@@ -34,17 +99,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     flex-direction: column;
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
-    border-top: 0.45rem solid var(--color-primary);
+    border-top: 0.45rem solid var(--accent);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-soft);
     padding: 1.5rem;
   }
-
-  .offer-card:nth-child(2) { border-top-color: var(--color-secondary-strong); }
-  .offer-card:nth-child(3) { border-top-color: var(--color-purple); }
-  .offer-card:nth-child(4) { border-top-color: var(--color-pink); }
-  .offer-card:nth-child(5) { border-top-color: var(--color-orange); }
-  .offer-card:nth-child(6) { border-top-color: var(--color-secondary); }
 
   .offer-card h3 {
     margin: 0 0 0.75rem;
@@ -65,7 +124,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     align-items: center;
     padding: 0.4rem 1rem;
     border-radius: 999px;
-    background: var(--color-primary);
+    background: var(--accent);
     color: white;
     font-weight: 700;
     font-size: 0.9rem;
@@ -73,15 +132,171 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
-  .offer-card:nth-child(2) .btn-info { background: var(--color-secondary-strong); }
-  .offer-card:nth-child(3) .btn-info { background: var(--color-purple); }
-  .offer-card:nth-child(4) .btn-info { background: var(--color-pink); }
-  .offer-card:nth-child(5) .btn-info { background: var(--color-orange); }
-  .offer-card:nth-child(6) .btn-info { background: var(--color-secondary); }
-
   .btn-info:hover {
     transform: translateY(-1px);
     opacity: 0.9;
+  }
+
+  .btn-info:focus-visible,
+  .service-dialog__close:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ─── Ventana de detalle ─────────────────────────────── */
+  .service-dialog {
+    width: min(40rem, calc(100% - 2rem));
+    max-height: min(85vh, 46rem);
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-xl);
+    background: transparent;
+    overflow: visible;
+  }
+
+  .service-dialog::backdrop {
+    background: rgba(40, 10, 60, 0.45);
+    backdrop-filter: blur(3px);
+  }
+
+  .service-dialog[open] {
+    animation: dialog-in 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .service-dialog[open]::backdrop {
+    animation: backdrop-in 0.28s ease;
+  }
+
+  .service-dialog__card {
+    position: relative;
+    max-height: min(85vh, 46rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 0.45rem solid var(--accent);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-hover);
+    padding: 2rem;
+  }
+
+  .service-dialog__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 22%, white);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .service-dialog__close:hover {
+    transform: scale(1.06);
+    opacity: 0.9;
+  }
+
+  .service-dialog__close svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+  }
+
+  .service-dialog__title {
+    margin: 0 3rem 1rem 0;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    color: var(--color-text);
+  }
+
+  .service-dialog__lead {
+    margin: 0 0 0.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .service-dialog__details {
+    margin: 0 0 1.5rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .service-dialog__for-whom {
+    background: rgba(102, 12, 159, 0.04);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .service-dialog__label {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-accent);
+    font-size: 0.95rem;
+    color: var(--color-text);
+    letter-spacing: 0.04em;
+  }
+
+  .service-dialog__for-whom ul {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .service-dialog__for-whom li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .service-dialog__for-whom li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Con la ventana abierta, la página de fondo no se desplaza */
+  :global(html:has(dialog.service-dialog[open])) {
+    overflow: hidden;
+  }
+
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+    }
+  }
+
+  @keyframes backdrop-in {
+    from {
+      opacity: 0;
+    }
   }
 
   @media (max-width: 900px) {
@@ -93,6 +308,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   @media (max-width: 600px) {
     .offer-grid {
       grid-template-columns: 1fr;
+    }
+
+    .service-dialog__card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .service-dialog__for-whom {
+      padding: 1rem 1.15rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-dialog[open],
+    .service-dialog[open]::backdrop {
+      animation: none;
     }
   }
 </style>
