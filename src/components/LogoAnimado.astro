@@ -1,0 +1,95 @@
+---
+// Logo de CogniLab en 12 piezas (public/logos/anim/) que se juntan al cargar cada página.
+// Posiciones en % del logo original (2048x808), obtenidas al recortar logo.svg pieza por pieza.
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const pieces = [
+  { left: 0.586, top: 46.658, width: 2.734 },   // 01 punto
+  { left: 3.955, top: 38.366, width: 5.469 },   // 02 punto
+  { left: 8.203, top: 6.188, width: 16.553 },   // 03 c
+  { left: 26.416, top: 8.787, width: 14.502 },  // 04 o
+  { left: 42.285, top: 7.55, width: 15.479 },   // 05 g
+  { left: 41.748, top: 48.515, width: 16.553 }, // 06 L
+  { left: 58.691, top: 7.921, width: 15.479 },  // 07 n
+  { left: 58.545, top: 49.257, width: 16.016 }, // 08 a
+  { left: 75.342, top: 7.178, width: 15.723 },  // 09 i
+  { left: 75.293, top: 50.124, width: 16.016 }, // 10 b
+  { left: 91.162, top: 77.723, width: 5.176 },  // 11 punto
+  { left: 96.729, top: 87.005, width: 2.686 }   // 12 punto
+];
+
+// Orden de llegada: como se lee el logo (puntos, c-o-g-n-i, L-a-b, puntos)
+const order = [1, 2, 3, 4, 5, 7, 9, 6, 8, 10, 11, 12];
+
+const ASPECT = 2048 / 808;
+const style = (p: (typeof pieces)[number], i: number) => {
+  // Cada pieza llega desde afuera, en la dirección que la separa del centro del logo
+  const heightPct = p.width * ASPECT; // alto aproximado en % del alto del logo (piezas casi cuadradas)
+  const cx = (p.left + p.width / 2 - 50) * ASPECT;
+  const cy = p.top + heightPct / 2 - 50;
+  const len = Math.hypot(cx, cy) || 1;
+  const reach = 55; // % del tamaño de la pieza
+  const delay = 80 + order.indexOf(i + 1) * 55;
+  const turn = i % 2 === 0 ? -9 : 9;
+  return [
+    `left: ${p.left}%`,
+    `top: ${p.top}%`,
+    `width: ${p.width}%`,
+    `--dx: ${((cx / len) * reach).toFixed(1)}%`,
+    `--dy: ${((cy / len) * reach).toFixed(1)}%`,
+    `--turn: ${turn}deg`,
+    `--delay: ${delay}ms`
+  ].join('; ');
+};
+---
+
+<span class="logo" role="img" aria-label={label}>
+  {pieces.map((p, i) => (
+    <img
+      class="logo-piece"
+      src={`${base}/logos/anim/logo-${String(i + 1).padStart(2, '0')}.png`}
+      alt=""
+      style={style(p, i)}
+      decoding="async"
+      draggable="false"
+    />
+  ))}
+</span>
+
+<style>
+  /* El alto lo define quien usa el logo con --logo-h; el ancho mantiene la proporción */
+  .logo {
+    position: relative;
+    display: block;
+    height: var(--logo-h, 60px);
+    width: calc(var(--logo-h, 60px) * 2048 / 808);
+  }
+
+  .logo-piece {
+    position: absolute;
+    height: auto;
+    max-width: none;
+    user-select: none;
+    animation: piece-in 0.8s cubic-bezier(0.22, 1.15, 0.36, 1) var(--delay) both;
+  }
+
+  @keyframes piece-in {
+    from {
+      opacity: 0;
+      transform: translate(var(--dx), var(--dy)) rotate(var(--turn)) scale(0.82);
+    }
+    60% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-piece {
+      animation: none;
+    }
+  }
+</style>

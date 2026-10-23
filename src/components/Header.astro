@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../data/site';
+import LogoAnimado from './LogoAnimado.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Sin barra final: las páginas se publican como /servicios/ y el menú compara con /servicios
@@ -16,7 +17,7 @@ const navItems = [
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href={`${base}/`} aria-label={`Ir al inicio de ${siteConfig.name}`}>
-      <img src={`${base}/logos/logo.svg`} alt={siteConfig.name} />
+      <LogoAnimado label={siteConfig.name} />
     </a>
 
     <nav class="desktop-nav" aria-label="Navegación principal">
@@ -116,12 +117,13 @@ const navItems = [
     display: none;
   }
 
-  .brand img {
-    width: 180px;
-    max-width: 100%;
-    object-fit: contain;
-    height: 80px;
-    padding: 10px 0px 10px 0px;
+  /* Mismo tamaño visible que tenía logo.svg: 60px de alto con 10px de aire arriba y abajo */
+  .brand {
+    --logo-h: 60px;
+  }
+
+  .brand :global(.logo) {
+    margin: 10px 0;
   }
 
   .nav-list {
@@ -329,11 +331,8 @@ const navItems = [
       height: 48px;
     }
 
-    .brand img {
-      width: auto;
-      height: 58px;
-      max-width: 220px;
-      object-fit: contain;
+    .brand {
+      --logo-h: 38px;
     }
 
     .mobile-menu {
@@ -438,9 +437,8 @@ const navItems = [
       height: 44px;
     }
 
-    .brand img {
-      height: 50px;
-      max-width: 190px;
+    .brand {
+      --logo-h: 30px;
     }
 
     .social-link {
