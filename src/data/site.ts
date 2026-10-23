@@ -105,31 +105,26 @@ export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',
     role: 'Psicopedagoga',
-    bio: 'Breve presentación profesional, enfoque de trabajo y población con la que trabaja.',
     image: '/images/equipo-rocio-do-pazo.jpg'
   },
   {
     name: 'Lic. Florencia Morales Ponce',
     role: 'Psicóloga',
-    bio: 'Breve presentación profesional, experiencia y áreas de especialización.',
     image: '/images/equipo-florencia-morales-ponce.jpg'
   },
   {
     name: 'Lic. Agustina Ceresetto',
     role: 'Psicopedagoga',
-    bio: 'Breve presentación profesional, modalidad de atención y enfoque terapéutico.',
     image: '/images/equipo-agustina-ceresetto.jpg'
   },
   {
     name: 'Lic. Aldana Almirón',
     role: 'Psicopedagoga',
-    bio: 'Breve presentación profesional, enfoque de trabajo y población con la que trabaja.',
     image: '/images/equipo-aldana-almiron.jpg'
   },
   {
     name: 'Lic. María José Carnelli',
     role: 'Psicopedagoga',
-    bio: 'Breve presentación profesional, experiencia y áreas de especialización.',
     image: '/images/equipo-maria-jose-carnelli.jpg'
   }
 ];

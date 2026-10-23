@@ -26,7 +26,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="team-info">
             <h3>{professional.name}</h3>
             <p class="role">{professional.role}</p>
-            <p class="bio">{professional.bio}</p>
           </div>
         </li>
       ))}
@@ -91,13 +90,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin: 0.35rem 0 0;
     font-size: 1.1rem;
     color: var(--color-text);
-  }
-
-  .bio {
-    margin: 0.85rem 0 0;
-    color: var(--color-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
   }
 
   /* ─── Celular: foto grande arriba, texto centrado debajo ─── */
