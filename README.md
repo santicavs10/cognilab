@@ -1,41 +1,38 @@
-# Base Astro para centro de psicología / psicopedagogía
+# CogniLab — sitio institucional
 
-Esta base está pensada para una web institucional, informativa y sin backend propio.
+Sitio web de CogniLab (psicología y psicopedagogía), publicado en **https://www.cognilab.com.ar**.
+Hecho con [Astro](https://astro.build), estático y sin backend propio.
 
-## Incluye
-- Home de una sola página con secciones
-- Servicios
-- Profesionales
-- Galería
-- Preguntas frecuentes
-- Contacto
-- Formulario preparado para Netlify Forms
-- Estructura simple para reemplazar textos, colores, tipografías, logos e imágenes
+- Arquitectura, servicios conectados y cómo se publica: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- Estado actual, pendientes y siguiente paso: [docs/PROJECT_STATE.md](docs/PROJECT_STATE.md)
 
-## Cómo usar
+## Requisitos
+
+- Node.js 22 LTS
+- Git
+
+## Comandos
+
 ```bash
-npm install
-npm run dev
+npm ci            # instala dependencias exactas (package-lock.json)
+npm run dev       # servidor local en http://localhost:4321
+npm run build     # compila a dist/
+npm run preview   # sirve dist/ para revisar la versión compilada
 ```
 
 ## Dónde cambiar cada cosa
-- **Textos y datos del sitio:** `src/data/site.ts`
+
+- **Textos, datos de contacto, servicios, equipo y fotos de la galería:** `src/data/site.ts`
 - **Estilos globales, colores y fuentes:** `src/styles/global.css`
-- **Logo y favicon:** `public/logos/`
-- **Imágenes:** `public/images/`
-- **Fuentes:** `public/fonts/`
+- **Secciones de la home:** `src/components/`
+- **Páginas:** `src/pages/` (los archivos que empiezan con `_` no se publican)
+- **Logos y favicon:** `public/logos/`
+- **Imágenes publicadas:** `public/images/` (ver "Imágenes" en [ARCHITECTURE.md](docs/ARCHITECTURE.md))
 
-## Qué deberías reemplazar primero
-1. `public/logos/logo.svg`
-2. `public/logos/favicon.svg`
-3. Imágenes de `public/images/`
-4. Variables de color en `src/styles/global.css`
-5. Fuentes reales en `public/fonts/` y `@font-face`
-6. Datos reales del centro en `src/data/site.ts`
+## Flujo de trabajo
 
-## Siguiente paso recomendado
-Cuando me pases la guía de colores, fuentes y logos, lo ideal es:
-- mapear la identidad visual a variables CSS reales
-- ajustar jerarquías tipográficas
-- adaptar el home al estilo exacto del diseñador
-- definir si conviene mantener one-page o pasar a multipágina
+1. Trabajar en una rama (por ejemplo `develop`), nunca directo en `main`.
+2. Al subir la rama a GitHub, Vercel genera una **vista previa** con URL propia.
+3. Revisar la vista previa (escritorio y celular).
+4. Abrir un PR hacia `main`. Al hacer merge, Vercel publica en cognilab.com.ar.
+5. Si algo sale mal: Vercel → Deployments → **Instant Rollback**.
