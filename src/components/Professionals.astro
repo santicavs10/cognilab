@@ -42,6 +42,19 @@ const accents = [
   </div>
 </section>
 
+<script>
+  // Marca a la persona cuya foto cruza la franja central de la pantalla
+  const photos = document.querySelectorAll<HTMLElement>('.team-photo');
+  if (photos.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => e.target.closest('.team-member')?.classList.toggle('is-centered', e.isIntersecting)),
+      { rootMargin: '-45% 0px -45% 0px' }
+    );
+    photos.forEach((p) => observer.observe(p));
+  }
+</script>
+
 <style>
   .section-title {
     font-size: clamp(1.8rem, 3vw, 2.8rem);
@@ -85,11 +98,18 @@ const accents = [
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
-  .team-member:hover .team-photo img {
-    transform: scale(1.04);
+  /* La foto se agranda al quedar en el centro de la pantalla (y con el mouse encima, si hay mouse) */
+  .team-member.is-centered .team-photo img {
+    transform: scale(1.06);
+  }
+
+  @media (hover: hover) {
+    .team-member:hover .team-photo img {
+      transform: scale(1.06);
+    }
   }
 
   .team-info h3 {
