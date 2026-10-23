@@ -33,7 +33,7 @@ const style = (p: (typeof pieces)[number], i: number) => {
   const cy = p.top + heightPct / 2 - 50;
   const len = Math.hypot(cx, cy) || 1;
   const reach = 55; // % del tamaño de la pieza
-  const delay = 80 + order.indexOf(i + 1) * 55;
+  const delay = 104 + order.indexOf(i + 1) * 72;
   const turn = i % 2 === 0 ? -9 : 9;
   return [
     `left: ${p.left}%`,
@@ -74,7 +74,7 @@ const style = (p: (typeof pieces)[number], i: number) => {
     height: auto;
     max-width: none;
     user-select: none;
-    animation: piece-in 0.8s cubic-bezier(0.22, 1.15, 0.36, 1) var(--delay) both;
+    animation: piece-in 1.04s cubic-bezier(0.22, 1.15, 0.36, 1) var(--delay) both;
   }
 
   @keyframes piece-in {
