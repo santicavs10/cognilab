@@ -69,11 +69,14 @@ const accents = [
     border-bottom: none;
   }
 
-  /* Foto circular limpia, sin borde ni anillo */
+  /* Foto circular con borde blanco y un anillo fino del color de la marca */
   .team-photo {
     width: 16rem;
     aspect-ratio: 1;
     border-radius: 50%;
+    padding: 6px;
+    background: var(--color-surface);
+    box-shadow: 0 0 0 3px var(--accent), var(--shadow-soft);
     overflow: hidden;
   }
 
