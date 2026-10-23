@@ -1,13 +1,18 @@
 ---
 import { siteConfig } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Un párrafo por oración (la descripción también se usa entera como meta descripción)
+const paragraphs = siteConfig.description.split(/(?<=\.)\s+/);
 ---
 
 <section id="inicio" class="hero section">
   <div class="container hero-grid">
     <div class="hero-content">
       <h1 data-reveal>{siteConfig.name}</h1>
-      <p class="hero-description" data-reveal>{siteConfig.description}</p>
+      <div class="hero-description" data-reveal>
+        {paragraphs.map((text) => <p>{text}</p>)}
+      </div>
     </div>
 
     <div class="hero-card" data-reveal>
@@ -56,6 +61,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-size: 1.05rem;
     line-height: 1.7;
     color: var(--color-text);
+  }
+
+  .hero-description p {
+    margin: 0;
+  }
+
+  .hero-description p + p {
+    margin-top: 0.85rem;
   }
 
   .hero-description::before {
