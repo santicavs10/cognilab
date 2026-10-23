@@ -1,6 +1,15 @@
 ---
 import { professionals } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Anillo de cada foto con un color de la marca, en orden
+const accents = [
+  'var(--color-primary)',
+  'var(--color-secondary-strong)',
+  'var(--color-purple)',
+  'var(--color-pink)',
+  'var(--color-orange)'
+];
 ---
 
 <section class="section section--alt" id="profesionales">
@@ -9,199 +18,137 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <h2 class="section-title">Nuestro equipo</h2>
     </div>
 
-    <!-- Aparece entero: en celular es un carrusel horizontal y las tarjetas de la derecha no entran en pantalla al bajar -->
-    <div class="profile-grid" id="profile-carousel" data-reveal>
-      {professionals.map((professional) => (
-        <article class="profile-card">
-          <div class="profile-image-wrap">
-            <img src={`${base}${professional.image}`} alt={professional.name} loading="lazy" />
+    <ul class="team-list">
+      {professionals.map((professional, i) => (
+        <li class="team-member" style={`--accent: ${accents[i % accents.length]}`} data-reveal>
+          <div class="team-photo">
+            <img
+              src={`${base}${professional.image}`}
+              alt={`Foto de ${professional.name}`}
+              width="600"
+              height="600"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
-          <div class="profile-content">
+          <div class="team-info">
             <p class="role">{professional.role}</p>
             <h3>{professional.name}</h3>
-            <p class="profile-bio">{professional.bio}</p>
+            <p class="bio">{professional.bio}</p>
           </div>
-        </article>
+        </li>
       ))}
-    </div>
-
-    <div class="carousel-dots" id="carousel-dots" aria-hidden="true">
-      {professionals.map((_, i) => (
-        <button class:list={['dot', { 'dot--active': i === 0 }]} data-index={i} aria-label={`Ver profesional ${i + 1}`} />
-      ))}
-    </div>
+    </ul>
   </div>
 </section>
-
-<script is:inline>
-  (function () {
-    const grid = document.getElementById('profile-carousel');
-    const dotsContainer = document.getElementById('carousel-dots');
-    if (!grid || !dotsContainer) return;
-
-    const dots = dotsContainer.querySelectorAll('.dot');
-    const cards = grid.querySelectorAll('.profile-card');
-
-    function updateDots() {
-      const scrollLeft = grid.scrollLeft;
-      const cardWidth = cards[0]?.offsetWidth + 16; // gap
-      const index = Math.round(scrollLeft / cardWidth);
-      dots.forEach((d, i) => d.classList.toggle('dot--active', i === index));
-    }
-
-    grid.addEventListener('scroll', updateDots, { passive: true });
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        const cardWidth = cards[0]?.offsetWidth + 16;
-        grid.scrollTo({ left: cardWidth * i, behavior: 'smooth' });
-      });
-    });
-  })();
-</script>
 
 <style>
   .section-title {
     font-size: clamp(1.8rem, 3vw, 2.8rem);
     color: var(--color-text);
-    margin: 0 0 2.5rem;
+    margin: 0 0 1.5rem;
   }
 
-  .profile-grid {
+  .team-list {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .team-member {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 10.5rem 1fr;
+    align-items: center;
+    gap: 2.25rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .profile-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: var(--color-surface-card);
-    border: 1px solid var(--color-border);
-    border-radius: 28px;
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  .team-member:last-child {
+    border-bottom: none;
   }
 
-  .profile-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-  }
-
-  .profile-image-wrap {
-    padding: 1rem 1rem 0;
-  }
-
-  .profile-image-wrap img {
-    width: 100%;
-    aspect-ratio: 4 / 4.2;
-    object-fit: cover;
-    border-radius: 22px;
+  /* Foto circular con borde blanco y un anillo fino del color de la marca */
+  .team-photo {
+    width: 10.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    padding: 5px;
     background: var(--color-surface);
+    box-shadow: 0 0 0 3px var(--accent), var(--shadow-soft);
+    overflow: hidden;
   }
 
-  .profile-content {
+  .team-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .team-member:hover .team-photo img {
+    transform: scale(1.04);
+  }
+
+  .team-info {
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
-    padding: 1.25rem 1.25rem 1.4rem;
+    gap: 0.5rem;
   }
 
   .role {
-    display: inline-flex;
     align-self: flex-start;
     margin: 0;
-    padding: 0.4rem 0.75rem;
+    padding: 0.35rem 0.8rem;
     border-radius: 999px;
-    background: var(--color-border-subtle);
+    background: color-mix(in srgb, var(--accent) 16%, white);
     color: var(--color-text);
-    font-size: 0.92rem;
-    font-weight: 800;
-    line-height: 1;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
   }
 
-  .profile-content h3 {
+  .team-info h3 {
     margin: 0;
     font-size: 1.45rem;
     color: var(--color-text);
   }
 
-  .profile-bio {
+  .bio {
     margin: 0;
     color: var(--color-muted);
     line-height: 1.7;
-    font-size: 1rem;
-  }
-
-  /* ─── Dots ───────────────────────────────────────────── */
-  .carousel-dots {
-    display: none;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-  }
-
-  .dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    border: none;
-    background: var(--color-border);
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.2s ease, transform 0.2s ease, width 0.2s ease;
-  }
-
-  .dot--active {
-    background: var(--color-primary);
-    width: 1.4rem;
-    border-radius: 999px;
   }
 
   /* ─── Responsive ─────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .profile-grid {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      gap: 1rem;
-      padding-bottom: 0.5rem;
+  @media (max-width: 600px) {
+    .team-member {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 1.25rem;
+      padding: 1.75rem 0;
+      text-align: center;
     }
 
-    .profile-grid::-webkit-scrollbar {
-      display: none;
+    .team-photo {
+      width: 8.75rem;
     }
 
-    .profile-card {
-      flex: 0 0 82%;
-      scroll-snap-align: center;
+    .role {
+      align-self: center;
     }
 
-    .carousel-dots {
-      display: flex;
+    .team-info h3 {
+      font-size: 1.3rem;
     }
   }
 
-  @media (max-width: 600px) {
-    .profile-card {
-      flex: 0 0 88%;
-    }
-
-    .profile-image-wrap {
-      padding: 0.9rem 0.9rem 0;
-    }
-
-    .profile-content {
-      padding: 1rem 1rem 1.2rem;
-    }
-
-    .profile-content h3 {
-      font-size: 1.3rem;
+  @media (prefers-reduced-motion: reduce) {
+    .team-photo img {
+      transition: none;
     }
   }
 </style>
