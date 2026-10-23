@@ -68,6 +68,8 @@ Reglas:
 - **Originales:** fuera del repo, en `../banco-imagenes/` (carpeta hermana en el espacio de trabajo local). Nunca se suben a Git, porque todo lo que está en `public/` es público y Git guarda el historial para siempre.
 - **Publicadas:** versiones optimizadas en `public/images/`, generadas con `sharp` (incluido en las dependencias de Astro): JPEG de calidad 78, progresivo.
 - **Galería "Nuestro espacio":** `nuestro-espacio-N.jpg` (1600 px) y `nuestro-espacio-N-800.jpg` (800 px), con `N` igual al número del archivo original. Se listan en orden en `gallery` de `src/data/site.ts`. Las fotos verticales se pasan a formato apaisado (foto completa sobre un fondo desenfocado de sí misma).
+- **Íconos de especialidades:** `public/images/iconos/*.png` son siluetas blancas con transparencia, generadas desde los emojis del banco con `node scripts/emoji-a-icono.cjs "<emoji.png>" <nombre>`. Se usan como máscara CSS (`mask`), así el color sale de la paleta (`--accent`) y se cambia sin editar las imágenes. Se usa uno por especialidad (`icon` en `specialties` de `site.ts`).
+- **Equipo:** `equipo-<nombre>.jpg`, recortes cuadrados centrados en la cara (hasta 900 px), mostrados en círculo.
 - **Privacidad:** antes de publicar, revisar que no se lean nombres ni datos de pacientes. En `nuestro-espacio-7` se desenfocaron los nombres escritos a mano.
 
 ## Espacio de trabajo local

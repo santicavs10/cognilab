@@ -13,18 +13,26 @@ export const siteConfig = {
   hours: 'Lunes a viernes de 9:00 a 19:00'
 };
 
+// Las dos descripciones tienen largo similar para ocupar los mismos renglones lado a lado.
+// icon: silueta en public/images/iconos/ (se colorea desde CSS)
 export const specialties = [
   {
     title: 'Psicología',
     description:
-      'Se abordan aspectos emocionales, conductuales y sociales del desarrollo de niños y adolescentes, promoviendo recursos que favorezcan su bienestar y su desenvolvimiento en los distintos ámbitos de la vida cotidiana. Se trabaja en conjunto con las familias y con la escuela, brindando orientaciones y herramientas que acompañen el proceso de cada niño o adolescente.'
+      'Se abordan aspectos emocionales, conductuales y sociales del desarrollo de niños y adolescentes, promoviendo recursos que favorezcan su bienestar y su desenvolvimiento en los distintos ámbitos de la vida cotidiana.',
+    icon: 'psicologia-cerebro'
   },
   {
     title: 'Psicopedagogía',
     description:
-      'Se abordan los procesos de aprendizaje de niños, adolescentes y adultos jóvenes, atendiendo a las dificultades que puedan presentarse y promoviendo el desarrollo de habilidades cognitivas y académicas que favorezcan el rendimiento, la trayectoria educativa y una mayor autonomía en el aprendizaje. Se trabaja en conjunto con las familias y con las instituciones educativas, brindando orientaciones, pautas para el acompañamiento en casa y articulando, cuando corresponde, las adecuaciones necesarias para cada proceso.'
+      'Se abordan los procesos de aprendizaje de niños, adolescentes y adultos jóvenes, desarrollando habilidades cognitivas y académicas para su autonomía y trayectoria educativa, y articulando las adecuaciones necesarias.',
+    icon: 'psicopedagogia-libro'
   }
 ];
+
+// Abordaje común a las dos especialidades
+export const specialtiesShared =
+  'Trabajamos en conjunto con las familias y con la escuela, brindando orientaciones, herramientas y pautas para acompañar cada proceso también desde casa.';
 
 export const services = [
   {

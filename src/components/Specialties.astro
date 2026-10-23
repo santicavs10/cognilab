@@ -1,6 +1,10 @@
 ---
-import { specialties } from '../data/site';
+import { specialties, specialtiesShared } from '../data/site';
 import Eyebrow from './Eyebrow.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Color de cada tarjeta, de sus íconos y de su conector con el bloque común
+const accents = ['var(--color-primary)', 'var(--color-secondary-strong)'];
 ---
 
 <section class="section section--alt" id="servicios">
@@ -10,12 +14,27 @@ import Eyebrow from './Eyebrow.astro';
       <h2>Nuestras especialidades</h2>
     </div>
     <div class="specialty-grid">
-      {specialties.map((s) => (
-        <article class="specialty-card" data-reveal>
-          <h3>{s.title}</h3>
+      {specialties.map((s, i) => (
+        <article class="specialty-card" style={`--accent: ${accents[i % accents.length]}`} data-reveal>
+          <div class="specialty-header">
+            <span
+              class="specialty-icon"
+              style={`--icon: url('${base}/images/iconos/${s.icon}.png'); --float-delay: ${i * -2.5}s`}
+              aria-hidden="true"
+            />
+            <h3>{s.title}</h3>
+          </div>
           <p>{s.description}</p>
         </article>
       ))}
+    </div>
+
+    <!-- Bloque común: los conectores y la franja en degradé lo unen a las dos tarjetas -->
+    <div class="specialty-shared" data-reveal>
+      <div class="specialty-links" aria-hidden="true">
+        {specialties.map((_, i) => <span style={`--accent: ${accents[i % accents.length]}`} />)}
+      </div>
+      <p class="specialty-shared__text">{specialtiesShared}</p>
     </div>
   </div>
 </section>
@@ -30,16 +49,21 @@ import Eyebrow from './Eyebrow.astro';
   .specialty-card {
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
-    border-top: 0.45rem solid var(--color-primary);
+    border-top: 0.45rem solid var(--accent);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-soft);
     padding: 1.5rem;
   }
 
-  .specialty-card:nth-child(2) { border-top-color: var(--color-secondary-strong); }
+  .specialty-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
 
   .specialty-card h3 {
-    margin: 0 0 0.75rem;
+    margin: 0;
     font-size: 1.3rem;
   }
 
@@ -49,9 +73,104 @@ import Eyebrow from './Eyebrow.astro';
     line-height: 1.65;
   }
 
+  /* ─── Ícono: silueta coloreada sobre un círculo suave, flotando ─── */
+  .specialty-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 12%, white);
+    animation: icon-float 5s ease-in-out var(--float-delay, 0s) infinite;
+  }
+
+  .specialty-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0.55rem;
+    background: var(--accent);
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
+  }
+
+  @keyframes icon-float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  /* ─── Bloque común ───────────────────────────────────── */
+  .specialty-shared {
+    max-width: 100%;
+  }
+
+  /* Conectores verticales desde el centro de cada tarjeta */
+  .specialty-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .specialty-links span {
+    justify-self: center;
+    width: 3px;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 35%, transparent));
+  }
+
+  .specialty-shared__text {
+    position: relative;
+    margin: 0;
+    padding: 1.6rem 2rem 1.35rem;
+    overflow: hidden;
+    background: var(--color-surface-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+    color: var(--color-text);
+    font-weight: 500;
+    line-height: 1.65;
+    text-align: center;
+  }
+
+  /* Franja superior en degradé: los colores de las dos especialidades */
+  .specialty-shared__text::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.45rem;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary-strong));
+  }
+
   @media (max-width: 900px) {
     .specialty-grid {
       grid-template-columns: 1fr;
+    }
+
+    /* Tarjetas una debajo de la otra: el conector baja de la última */
+    .specialty-links {
+      grid-template-columns: 1fr;
+    }
+
+    .specialty-links span:not(:last-child) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .specialty-shared__text {
+      padding: 1.5rem 1.25rem 1.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .specialty-icon {
+      animation: none;
     }
   }
 </style>
