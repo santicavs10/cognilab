@@ -62,29 +62,31 @@ const accents = [
     margin: 0 0 1.5rem;
   }
 
+  /* Grilla: 3 por fila en escritorio, 2 en tablet, 1 en celular; la última fila queda centrada */
   .team-list {
-    max-width: 54rem;
-    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem 2rem;
+    max-width: 66rem;
+    margin: 1rem auto 0;
     padding: 0;
     list-style: none;
   }
 
+  /* Cada persona: foto centrada y, debajo, nombre y rol */
   .team-member {
-    display: grid;
-    grid-template-columns: 16rem 1fr;
+    flex: 0 1 19rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 2.75rem;
-    padding: 2.25rem 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .team-member:last-child {
-    border-bottom: none;
+    gap: 1.25rem;
+    text-align: center;
   }
 
   /* Foto circular con borde blanco y un anillo fino del color de la marca */
   .team-photo {
-    width: 16rem;
+    width: 15rem;
     aspect-ratio: 1;
     border-radius: 50%;
     padding: 6px;
@@ -114,24 +116,24 @@ const accents = [
 
   .team-info h3 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: var(--color-text);
   }
 
   .role {
-    margin: 0.35rem 0 0;
-    font-size: 1.1rem;
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
     color: var(--color-text);
   }
 
-  /* ─── Celular: foto grande arriba, texto centrado debajo ─── */
+  /* ─── Celular: una persona por fila, foto grande ─── */
   @media (max-width: 600px) {
+    .team-list {
+      gap: 2.75rem;
+    }
+
     .team-member {
-      grid-template-columns: 1fr;
-      justify-items: center;
-      gap: 1.25rem;
-      padding: 2rem 0;
-      text-align: center;
+      flex-basis: 100%;
     }
 
     .team-photo {
