@@ -137,18 +137,18 @@ export const professionals = [
     image: '/images/equipo-maria-jose-carnelli.jpg'
   },
   {
-    name: 'Felisa Corbacho',
-    role: '', // pendiente de confirmar
+    name: 'Lic. Felisa Corbacho',
+    role: 'Psicopedagoga',
     image: '/images/equipo-felisa-corbacho.jpg'
   },
   {
-    name: 'Adriana Acosta',
-    role: '', // pendiente de confirmar
+    name: 'Lic. Adriana Acosta',
+    role: 'Psicóloga',
     image: '/images/equipo-adriana-acosta.jpg'
   },
   {
-    name: 'Alma Brea Lucchelli',
-    role: '', // pendiente de confirmar
+    name: 'Lic. Alma Brea Lucchelli',
+    role: 'Psicóloga',
     image: '/images/equipo-alma-brea-lucchelli.jpg'
   }
 ];
