@@ -41,6 +41,75 @@ const rich = (text: string) =>
   </div>
 </section>
 
+<script>
+  // Justificado "suave" en celular: los renglones que al justificarse quedarían con espacios muy
+  // abiertos terminan con un <br> y quedan alineados a la izquierda (CSS no justifica una línea
+  // que termina en salto forzado). El resto del párrafo sigue justificado.
+  const MOBILE = window.matchMedia('(max-width: 600px)');
+  const MAX_EXTRA_EM = 0.7; // espacio extra máximo por hueco entre palabras, en em (más que eso se ve "agujereado")
+  const paragraphs = [...document.querySelectorAll<HTMLParagraphElement>('.hero-description p')];
+  const original = new Map(paragraphs.map((p) => [p, p.innerHTML]));
+
+  type Word = { node: Text; end: number; rect: DOMRect };
+
+  const wordsOf = (p: HTMLElement): Word[] => {
+    const words: Word[] = [];
+    const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+    const range = document.createRange();
+    for (let node = walker.nextNode() as Text | null; node; node = walker.nextNode() as Text | null) {
+      for (const m of node.data.matchAll(/\S+/g)) {
+        range.setStart(node, m.index!);
+        range.setEnd(node, m.index! + m[0].length);
+        const rects = range.getClientRects();
+        if (rects.length) words.push({ node, end: m.index! + m[0].length, rect: rects[rects.length - 1] });
+      }
+    }
+    return words;
+  };
+
+  const balance = () => {
+    paragraphs.forEach((p) => {
+      p.innerHTML = original.get(p) ?? p.innerHTML;
+      if (!MOBILE.matches) return;
+
+      // Cortes de renglón naturales (los mismos con o sin justificar)
+      p.style.textAlign = 'left';
+      const words = wordsOf(p);
+      const lines: Word[][] = [];
+      words.forEach((w) => {
+        const last = lines[lines.length - 1];
+        if (last && Math.abs(last[0].rect.top - w.rect.top) < w.rect.height / 2) last.push(w);
+        else lines.push([w]);
+      });
+      const width = p.clientWidth;
+      const maxExtra = MAX_EXTRA_EM * parseFloat(getComputedStyle(p).fontSize);
+      const left = p.getBoundingClientRect().left;
+
+      // Renglones flojos (todos menos el último): se cortan con <br>, de atrás para adelante
+      const loose = lines.slice(0, -1).filter((line) => {
+        if (line.length < 2) return true;
+        const used = line[line.length - 1].rect.right - left;
+        return (width - used) / (line.length - 1) > maxExtra;
+      });
+      loose.reverse().forEach((line) => {
+        const lastWord = line[line.length - 1];
+        const rest = lastWord.node.splitText(lastWord.end);
+        rest.parentNode!.insertBefore(document.createElement('br'), rest);
+      });
+      p.style.textAlign = '';
+    });
+  };
+
+  let timer: number | undefined;
+  const schedule = () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(balance, 120);
+  };
+  document.fonts.ready.then(balance);
+  window.addEventListener('resize', schedule);
+  MOBILE.addEventListener('change', balance);
+</script>
+
 <style>
   .hero {
     padding: 2rem 0 5rem;
@@ -179,10 +248,6 @@ const rich = (text: string) =>
       gap: 9rem;
     }
 
-    /* En celular los renglones son cortos: justificado deja huecos, mejor alineado a la izquierda */
-    .hero-description p {
-      text-align: left;
-    }
 
     .hero-description {
       padding: 1.5rem 1.25rem 1.25rem;
