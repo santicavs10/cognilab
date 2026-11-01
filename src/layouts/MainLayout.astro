@@ -81,6 +81,12 @@ const schemaOrg = {
         document.documentElement.classList.add('reveal-on');
       }
     </script>
+
+    <!-- Vercel Web Analytics: cuenta visitas sin cookies. Se activa en el panel de Vercel (pestaña Analytics). -->
+    <script is:inline>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script is:inline defer src="/_vercel/insights/script.js"></script>
   </head>
   <body>
     <slot />
