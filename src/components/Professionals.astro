@@ -34,7 +34,7 @@ const accents = [
 
           <div class="team-info">
             <h3>{professional.name}</h3>
-            <p class="role">{professional.role}</p>
+            {professional.role && <p class="role">{professional.role}</p>}
           </div>
         </li>
       ))}

@@ -109,6 +109,7 @@ export const services = [
   }
 ];
 
+// role es opcional: si está vacío, no se muestra
 export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',
@@ -134,6 +135,21 @@ export const professionals = [
     name: 'Lic. María José Carnelli',
     role: 'Psicopedagoga',
     image: '/images/equipo-maria-jose-carnelli.jpg'
+  },
+  {
+    name: 'Felisa Corbacho',
+    role: '', // pendiente de confirmar
+    image: '/images/equipo-felisa-corbacho.jpg'
+  },
+  {
+    name: 'Adriana Acosta',
+    role: '', // pendiente de confirmar
+    image: '/images/equipo-adriana-acosta.jpg'
+  },
+  {
+    name: 'Alma Brea Lucchelli',
+    role: '', // pendiente de confirmar
+    image: '/images/equipo-alma-brea-lucchelli.jpg'
   }
 ];
 
