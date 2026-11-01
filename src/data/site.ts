@@ -14,6 +14,12 @@ export const siteConfig = {
   hours: 'Lunes a viernes de 9:00 a 19:00'
 };
 
+// Estadísticas de visitas: Cloudflare Web Analytics (dash.cloudflare.com → Web Analytics → www.cognilab.com.ar).
+// El token es público (va en el código del sitio); no es una clave secreta.
+export const analytics = {
+  cloudflareToken: '8d3aa454a2704441a113baca0cbbbecb'
+};
+
 // Portada: dos bloques en zigzag (texto/foto y foto/texto).
 // Fuente: ../info_manual/Nuestro enfoque.docx. **texto** = negrita.
 export const about = [
