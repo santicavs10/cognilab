@@ -1,28 +1,43 @@
 ---
-import { siteConfig } from '../data/site';
+import { about } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// Un párrafo por oración (la descripción también se usa entera como meta descripción)
-const paragraphs = siteConfig.description.split(/(?<=\.)\s+/);
+// **texto** -> <strong>texto</strong> (se escapa el HTML antes)
+const rich = (text: string) =>
+  text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 ---
 
 <section id="inicio" class="hero section">
-  <div class="container hero-grid">
-    <div class="hero-content">
-      <h1 data-reveal>{siteConfig.name}</h1>
-      <div class="hero-description" data-reveal>
-        {paragraphs.map((text) => <p>{text}</p>)}
-      </div>
-    </div>
+  <div class="container hero-blocks">
+    {about.map((block, i) => {
+      // El primer título es el h1 de la página; los siguientes, h2 con el mismo aspecto
+      const Heading = i === 0 ? 'h1' : 'h2';
+      return (
+        <div class:list={['hero-grid', { 'hero-grid--reverse': i % 2 === 1 }]}>
+          <div class="hero-content">
+            <Heading class="hero-title" data-reveal>{block.title}</Heading>
+            <div class="hero-description" data-reveal>
+              {block.paragraphs.map((text) => <p set:html={rich(text)} />)}
+            </div>
+          </div>
 
-    <div class="hero-card" data-reveal>
-      <img
-        src={`${base}/images/nuestro-enfoque.jpg`}
-        alt="Escritorio de trabajo de CogniLab con materiales de evaluación, juegos didácticos y un cuaderno con el logo"
-        width="889"
-        height="1333"
-      />
-    </div>
+          <div class="hero-card" data-reveal>
+            <img
+              src={`${base}${block.image}`}
+              alt={block.alt}
+              width={block.imageWidth}
+              height={block.imageHeight}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </div>
+        </div>
+      );
+    })}
   </div>
 </section>
 
@@ -32,6 +47,12 @@ const paragraphs = siteConfig.description.split(/(?<=\.)\s+/);
     scroll-margin-top: 80px;
   }
 
+  .hero-blocks {
+    display: grid;
+    gap: 4.5rem;
+  }
+
+  /* Texto a la izquierda y foto a la derecha; en los bloques pares, al revés (zigzag) */
   .hero-grid {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
@@ -39,16 +60,25 @@ const paragraphs = siteConfig.description.split(/(?<=\.)\s+/);
     align-items: center;
   }
 
+  .hero-grid--reverse {
+    grid-template-columns: 0.95fr 1.05fr;
+  }
+
+  .hero-grid--reverse .hero-card {
+    order: -1;
+  }
+
   .hero-content {
     max-width: 640px;
   }
 
   /* Mismo tamaño que un h2 global: el título se achicó a propósito */
-  .hero-content h1 {
+  .hero-title {
+    margin: 0 0 0.75rem;
     font-size: clamp(2rem, 3vw, 3.2rem);
   }
 
-  /* Texto del enfoque en una tarjeta, con la franja arcoíris de los colores del logo */
+  /* Texto en una tarjeta, con la franja arcoíris de los colores del logo */
   .hero-description {
     position: relative;
     overflow: hidden;
@@ -69,6 +99,10 @@ const paragraphs = siteConfig.description.split(/(?<=\.)\s+/);
 
   .hero-description p + p {
     margin-top: 0.85rem;
+  }
+
+  .hero-description :global(strong) {
+    font-weight: 700;
   }
 
   .hero-description::before {
@@ -97,29 +131,32 @@ const paragraphs = siteConfig.description.split(/(?<=\.)\s+/);
 
   /* ─── Responsive ─────────────────────────────────────── */
   @media (max-width: 900px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-    }
-
     .hero {
       padding-top: 2rem;
     }
 
-    /* Título → foto → texto: el bloque de texto se "abre" para intercalar la foto */
-    .hero-grid {
+    .hero-blocks {
+      gap: 3.5rem;
+    }
+
+    .hero-grid,
+    .hero-grid--reverse {
+      grid-template-columns: 1fr;
       gap: 1.5rem;
     }
 
+    /* Título → foto → texto en cada bloque: el bloque de texto se "abre" para intercalar la foto */
     .hero-content {
       display: contents;
     }
 
-    .hero-content h1 {
+    .hero-title {
       order: 1;
       margin: 0;
     }
 
-    .hero-card {
+    .hero-card,
+    .hero-grid--reverse .hero-card {
       order: 2;
       height: 42vh;
       min-height: 280px;
@@ -141,7 +178,8 @@ const paragraphs = siteConfig.description.split(/(?<=\.)\s+/);
       line-height: 1.65;
     }
 
-    .hero-card {
+    .hero-card,
+    .hero-grid--reverse .hero-card {
       height: 36vh;
       min-height: 240px;
       border-radius: 22px;

@@ -1,8 +1,9 @@
 export const siteConfig = {
-  name: 'CogniLab: Nuestro enfoque',
+  name: 'CogniLab',
   tagline: 'Psicología y psicopedagogía para niños, adolescentes y familias',
+  // Meta descripción (Google y links compartidos): primer párrafo de "Quiénes somos", sin negritas
   description:
-    'En CogniLab trabajamos desde una mirada integral e interdisciplinaria, acompañando a niños, adolescentes y sus familias en los desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional. Entendemos que cada proceso es único, por eso proponemos intervenciones cuidadosas, basadas en evidencia y construidas en articulación con la familia, la escuela y otros profesionales, con el propósito de favorecer avances significativos y una mejor calidad de vida.',
+    'En CogniLab trabajamos desde una mirada integral e interdisciplinaria, acompañando a niños, adolescentes y sus familias en desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional.',
   phone: '+54 9 11 7385-5741',
   whatsapp: '5491173855741',
   whatsappMessage: 'Hola, quiero pedir información',
@@ -12,6 +13,33 @@ export const siteConfig = {
   maps: 'https://www.google.com/maps/search/Av.+Juramento+2017+6+B,+Belgrano,+Buenos+Aires',
   hours: 'Lunes a viernes de 9:00 a 19:00'
 };
+
+// Portada: dos bloques en zigzag (texto/foto y foto/texto).
+// Fuente: ../info_manual/Nuestro enfoque.docx. **texto** = negrita.
+export const about = [
+  {
+    title: 'Quiénes somos',
+    image: '/images/nuestro-enfoque.jpg',
+    imageWidth: 889,
+    imageHeight: 1333,
+    alt: 'Escritorio de trabajo de CogniLab con materiales de evaluación, juegos didácticos y un cuaderno con el logo',
+    paragraphs: [
+      'En CogniLab trabajamos desde una **mirada integral e interdisciplinaria**, acompañando a **niños, adolescentes y sus familias** en desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional.',
+      'También acompañamos a **adultos jóvenes** en los desafíos propios de la vida universitaria y la inserción en el mundo laboral, brindando herramientas que favorezcan la autonomía, la organización y el desarrollo de sus habilidades personales y académicas.'
+    ]
+  },
+  {
+    title: 'Nuestro enfoque',
+    image: '/images/nuestro-enfoque-2.jpg',
+    imageWidth: 1200,
+    imageHeight: 800,
+    alt: 'Manos jugando con un juego de encastre de aros de colores sobre una mesa',
+    paragraphs: [
+      'Entendemos que cada proceso es **único**, por eso diseñamos intervenciones **individualizadas, específicas y estratégicas, basadas en evidencia** y orientadas al logro de **objetivos concretos**. Trabajamos en articulación con las familias, las escuelas y otros profesionales, buscando generar avances significativos que se traduzcan en mejoras en la vida cotidiana y el bienestar de cada persona.',
+      'Valoramos el **trabajo en equipo**, desde una **mirada cercana y comprometida**. Apostamos a la **formación continua y a la actualización permanente** de nuestros conocimientos y prácticas, manteniéndonos al día con las últimas investigaciones y enfoques de intervención, para ofrecer un acompañamiento de calidad, fundamentado y acorde a las necesidades de cada persona.'
+    ]
+  }
+];
 
 // Las dos descripciones tienen largo similar para ocupar los mismos renglones lado a lado.
 // icon: silueta en public/images/iconos/ (se colorea desde CSS)
