@@ -123,14 +123,14 @@ export const professionals = [
     image: '/images/equipo-florencia-morales-ponce.jpg'
   },
   {
-    name: 'Lic. Agustina Ceresetto',
-    role: 'Psicopedagoga',
-    image: '/images/equipo-agustina-ceresetto.jpg'
-  },
-  {
     name: 'Lic. Aldana Almirón',
     role: 'Psicopedagoga',
     image: '/images/equipo-aldana-almiron.jpg'
+  },
+  {
+    name: 'Lic. Agustina Ceresetto',
+    role: 'Psicopedagoga',
+    image: '/images/equipo-agustina-ceresetto.jpg'
   },
   {
     name: 'Lic. María José Carnelli',
