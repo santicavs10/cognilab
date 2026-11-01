@@ -49,10 +49,12 @@ Servidores de nombres delegados en NIC.ar: `dexter.ns.cloudflare.com` y `ullis.n
 | TXT | `_vercel` | `vc-domain-verify=cognilab.com.ar,…` | — |
 | TXT | `_vercel` | `vc-domain-verify=www.cognilab.com.ar,…` | — |
 | CAA | `@` | letsencrypt.org, pki.goog, sectigo.com | — |
+| TXT | `@` | `google-site-verification=…` | — |
 
 Reglas:
 - **Nunca activar el proxy de Cloudflare (nube naranja)** en los registros que van a Vercel: duplica la CDN y puede romper el certificado HTTPS. Cloudflare lo sugiere; se ignora.
 - Los TXT `_vercel` verifican que el dominio pertenece a este proyecto de Vercel. Se pueden quitar, pero no molestan.
+- El TXT `google-site-verification` verifica el dominio en **Google Search Console** (propiedad de dominio `cognilab.com.ar`, cuenta de Google de CogniLab, desde el 01/11/2026). **No borrarlo**: sin él se pierde el acceso. Sitemap cargado: `https://www.cognilab.com.ar/sitemap-index.xml`.
 - No hay correo en el dominio (sin MX). Si algún día se agrega, se cargan los registros en Cloudflare.
 - DNSSEC está desactivado.
 - Para un subdominio nuevo (por ejemplo `app.cognilab.com.ar`): se agrega en el proyecto de Vercel correspondiente y se crea el CNAME que Vercel indique, en Cloudflare, en modo DNS only.
