@@ -30,7 +30,7 @@ NIC Argentina ──delega DNS──▶ Cloudflare (DNS) ──apunta a──▶
 | **Hosting** | Vercel, cuenta `santicavs10` (plan Hobby), proyecto `cognilab` | Compila y publica. URL interna: `cognilab-ebon.vercel.app` |
 | **DNS** | Cloudflare, zona `cognilab.com.ar` | Registros que llevan el dominio a Vercel |
 | **Dominio** | NIC Argentina (nic.ar), `cognilab.com.ar` | Registro del dominio. **Vence el 28/03/2027 y no se renueva solo.** Se gestiona desde la cuenta NIC.ar del responsable. |
-| **Formulario de contacto** | Web3Forms (`api.web3forms.com`) | Envía por mail las consultas del formulario. La clave pública está en `src/components/Contact.astro`. |
+| **Formulario de contacto** | Web3Forms (`api.web3forms.com`), cuenta de CogniLab | Envía por mail a equipo.cognilab@gmail.com las consultas del formulario. La clave pública (access key) está en `src/components/Contact.astro`; el mail de destino se cambia desde el panel de Web3Forms. |
 
 ### Publicación (Vercel)
 

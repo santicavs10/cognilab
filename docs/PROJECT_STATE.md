@@ -17,7 +17,6 @@ Sitio institucional de CogniLab: claro, confiable, accesible y atractivo.
 
 | Prioridad | Pendiente | Detalle |
 |---|---|---|
-| Alta | **Formulario de contacto** | Usa una clave de Web3Forms creada por el desarrollador anterior: no se sabe a qué mail llegan las consultas. Crear una clave propia con el mail del centro y reemplazarla en `src/components/Contact.astro`. |
 | Alta | **Renovar el dominio** | Vence el **28/03/2027** en NIC.ar y no se renueva solo. Renovar con margen (febrero de 2027). |
 | Media | **Plan de Vercel** | El plan Hobby es para uso no comercial. Decidir si se pasa a Pro. |
 | Media | **Presentación de cada profesional** | Se quitó el texto de plantilla; agregar una descripción real por persona si se quiere mostrar (campo `bio` en `professionals`). |
