@@ -1,6 +1,7 @@
 ---
 import { services } from '../data/site';
 import Eyebrow from './Eyebrow.astro';
+import InfoDialog from './InfoDialog.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Color de cada tarjeta y de su ventana de detalle, en el mismo orden que services
@@ -13,6 +14,7 @@ const accents = [
   'var(--color-secondary)'
 ];
 const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
+// Sin JavaScript, "+ info" lleva a la página de servicios
 ---
 
 <section class="section">
@@ -29,7 +31,7 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
           <a
             href={`${base}/servicios#${s.slug}`}
             class="btn-info"
-            data-service-dialog={`servicio-${s.slug}`}
+            data-dialog-open={`servicio-${s.slug}`}
             aria-haspopup="dialog"
           >
             + info<span class="visually-hidden"> sobre {s.title}</span>
@@ -40,52 +42,24 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
   </div>
 
   {services.map((s, i) => (
-    <dialog
-      class="service-dialog"
+    <InfoDialog
       id={`servicio-${s.slug}`}
-      style={accentFor(i)}
-      aria-labelledby={`servicio-${s.slug}-titulo`}
+      labelledby={`servicio-${s.slug}-titulo`}
+      accent={accents[i % accents.length]}
     >
-      <div class="service-dialog__card">
-        <button class="service-dialog__close" type="button" aria-label="Cerrar">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-        </button>
+      <h2 class="service-dialog__title" id={`servicio-${s.slug}-titulo`}>{s.title}</h2>
+      <p class="service-dialog__lead">{s.description}</p>
+      <p class="service-dialog__details">{s.details}</p>
 
-        <h2 class="service-dialog__title" id={`servicio-${s.slug}-titulo`}>{s.title}</h2>
-        <p class="service-dialog__lead">{s.description}</p>
-        <p class="service-dialog__details">{s.details}</p>
-
-        <div class="service-dialog__for-whom">
-          <p class="service-dialog__label">¿Para quién?</p>
-          <ul>
-            {s.forWhom.map((item) => <li>{item}</li>)}
-          </ul>
-        </div>
+      <div class="service-dialog__for-whom">
+        <p class="service-dialog__label">¿Para quién?</p>
+        <ul>
+          {s.forWhom.map((item) => <li>{item}</li>)}
+        </ul>
       </div>
-    </dialog>
+    </InfoDialog>
   ))}
 </section>
-
-<script>
-  const triggers = document.querySelectorAll<HTMLAnchorElement>('[data-service-dialog]');
-
-  triggers.forEach((trigger) => {
-    const dialog = document.getElementById(trigger.dataset.serviceDialog ?? '') as HTMLDialogElement | null;
-    if (!dialog || typeof dialog.showModal !== 'function') return;
-
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      dialog.showModal();
-    });
-
-    dialog.querySelector('.service-dialog__close')?.addEventListener('click', () => dialog.close());
-
-    // Tocar fuera de la tarjeta (sobre el fondo oscurecido) cierra la ventana
-    dialog.addEventListener('click', (e) => {
-      if (e.target === dialog) dialog.close();
-    });
-  });
-</script>
 
 <style>
   .offer-grid {
@@ -137,80 +111,12 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
     opacity: 0.9;
   }
 
-  .btn-info:focus-visible,
-  .service-dialog__close:focus-visible {
+  .btn-info:focus-visible {
     outline: 3px solid var(--accent);
     outline-offset: 3px;
   }
 
-  /* ─── Ventana de detalle ─────────────────────────────── */
-  .service-dialog {
-    width: min(40rem, calc(100% - 2rem));
-    max-height: min(85vh, 46rem);
-    padding: 0;
-    border: none;
-    border-radius: var(--radius-xl);
-    background: transparent;
-    overflow: visible;
-  }
-
-  .service-dialog::backdrop {
-    background: rgba(40, 10, 60, 0.45);
-    backdrop-filter: blur(3px);
-  }
-
-  .service-dialog[open] {
-    animation: dialog-in 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-
-  .service-dialog[open]::backdrop {
-    animation: backdrop-in 0.28s ease;
-  }
-
-  .service-dialog__card {
-    position: relative;
-    max-height: min(85vh, 46rem);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-top: 0.45rem solid var(--accent);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-hover);
-    padding: 2rem;
-  }
-
-  .service-dialog__close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    display: grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--accent) 22%, white);
-    color: var(--color-text);
-    cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-
-  .service-dialog__close:hover {
-    transform: scale(1.06);
-    opacity: 0.9;
-  }
-
-  .service-dialog__close svg {
-    width: 1.1rem;
-    height: 1.1rem;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2.6;
-    stroke-linecap: round;
-  }
-
+  /* ─── Contenido de la ventana de detalle (la ventana es InfoDialog) ─── */
   .service-dialog__title {
     margin: 0 3rem 1rem 0;
     font-size: clamp(1.4rem, 2.5vw, 1.8rem);
@@ -281,24 +187,6 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
     border: 0;
   }
 
-  /* Con la ventana abierta, la página de fondo no se desplaza */
-  :global(html:has(dialog.service-dialog[open])) {
-    overflow: hidden;
-  }
-
-  @keyframes dialog-in {
-    from {
-      opacity: 0;
-      transform: translateY(12px) scale(0.97);
-    }
-  }
-
-  @keyframes backdrop-in {
-    from {
-      opacity: 0;
-    }
-  }
-
   @media (max-width: 900px) {
     .offer-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -310,19 +198,8 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
       grid-template-columns: 1fr;
     }
 
-    .service-dialog__card {
-      padding: 1.5rem 1.25rem;
-    }
-
     .service-dialog__for-whom {
       padding: 1rem 1.15rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .service-dialog[open],
-    .service-dialog[open]::backdrop {
-      animation: none;
     }
   }
 </style>

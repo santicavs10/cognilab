@@ -109,7 +109,8 @@ export const services = [
   }
 ];
 
-// role es opcional: si está vacío, no se muestra
+// role es opcional: si está vacío, no se muestra.
+// bio (opcional): presentación que se ve en la ventana "Conocé más"; sin bio se muestra un aviso provisorio.
 export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',

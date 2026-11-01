@@ -1,0 +1,145 @@
+---
+// Ventana emergente compartida (servicios, equipo). El contenido va en el slot.
+// Se abre con cualquier elemento que tenga data-dialog-open="<id>".
+// Se cierra con la X, con Esc o tocando fuera de la tarjeta.
+interface Props {
+  id: string;
+  labelledby: string;
+  accent: string;
+}
+const { id, labelledby, accent } = Astro.props;
+---
+
+<dialog class="info-dialog" id={id} style={`--accent: ${accent}`} aria-labelledby={labelledby}>
+  <div class="info-dialog__card">
+    <button class="info-dialog__close" type="button" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <slot />
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-dialog-open]').forEach((trigger) => {
+    const dialog = document.getElementById(trigger.dataset.dialogOpen ?? '') as HTMLDialogElement | null;
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      dialog.showModal();
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('dialog.info-dialog').forEach((dialog) => {
+    dialog.querySelector('.info-dialog__close')?.addEventListener('click', () => dialog.close());
+    // Tocar fuera de la tarjeta (sobre el fondo oscurecido) cierra la ventana
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  });
+</script>
+
+<style>
+  .info-dialog {
+    width: min(40rem, calc(100% - 2rem));
+    max-height: min(85vh, 46rem);
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-xl);
+    background: transparent;
+    overflow: visible;
+  }
+
+  .info-dialog::backdrop {
+    background: rgba(40, 10, 60, 0.45);
+    backdrop-filter: blur(3px);
+  }
+
+  .info-dialog[open] {
+    animation: dialog-in 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .info-dialog[open]::backdrop {
+    animation: backdrop-in 0.28s ease;
+  }
+
+  .info-dialog__card {
+    position: relative;
+    max-height: min(85vh, 46rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 0.45rem solid var(--accent);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-hover);
+    padding: 2rem;
+  }
+
+  .info-dialog__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 22%, white);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .info-dialog__close:hover {
+    transform: scale(1.06);
+    opacity: 0.9;
+  }
+
+  .info-dialog__close:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .info-dialog__close svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+  }
+
+  /* Con una ventana abierta, la página de fondo no se desplaza */
+  :global(html:has(dialog.info-dialog[open])) {
+    overflow: hidden;
+  }
+
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+    }
+  }
+
+  @keyframes backdrop-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .info-dialog__card {
+      padding: 1.5rem 1.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .info-dialog[open],
+    .info-dialog[open]::backdrop {
+      animation: none;
+    }
+  }
+</style>

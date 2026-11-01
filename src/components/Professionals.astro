@@ -1,6 +1,20 @@
 ---
 import { professionals } from '../data/site';
+import InfoDialog from './InfoDialog.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// "Lic. María José Carnelli" -> "maria-jose-carnelli" (id de su ventana)
+const slug = (name: string) =>
+  name.replace(/^Lic\.\s*/, '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, '-');
+const bioOf = (p: (typeof professionals)[number]) => (p as { bio?: string }).bio ?? '';
+const firstName = (name: string) => name.replace(/^Lic\.\s*/, '').split(' ')[0];
+
+// Áreas en orden de aparición; cada profesional va al área de su rol.
+// El color del área es el mismo de su tarjeta en "Nuestras especialidades".
+const areas = [
+  { title: 'Psicopedagogía', role: 'Psicopedagoga', accent: 'var(--color-secondary-strong)' },
+  { title: 'Psicología', role: 'Psicóloga', accent: 'var(--color-primary)' }
+];
 
 // Anillo de cada foto con un color de la marca, en orden
 const accents = [
@@ -10,6 +24,9 @@ const accents = [
   'var(--color-pink)',
   'var(--color-orange)'
 ];
+
+// El anillo se asigna por posición en la lista completa, así cada persona mantiene el suyo
+const withAccent = professionals.map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
 ---
 
 <section class="section section--alt" id="profesionales">
@@ -18,9 +35,12 @@ const accents = [
       <h2 class="section-title">Nuestro equipo</h2>
     </div>
 
+    {areas.map((area) => (
+    <div class="team-area" style={`--area: ${area.accent}`}>
+    <h3 class="team-area__title" data-reveal>{area.title}</h3>
     <ul class="team-list">
-      {professionals.map((professional, i) => (
-        <li class="team-member" style={`--accent: ${accents[i % accents.length]}`} data-reveal>
+      {withAccent.filter((p) => p.role === area.role).map((professional) => (
+        <li class="team-member" style={`--accent: ${professional.accent}`} data-reveal>
           <div class="team-photo">
             <img
               src={`${base}${professional.image}`}
@@ -33,13 +53,45 @@ const accents = [
           </div>
 
           <div class="team-info">
-            <h3>{professional.name}</h3>
+            <h4>{professional.name}</h4>
             {professional.role && <p class="role">{professional.role}</p>}
+            <button
+              class="team-more"
+              type="button"
+              data-dialog-open={`profesional-${slug(professional.name)}`}
+              aria-haspopup="dialog"
+            >
+              Conocé más<span class="visually-hidden"> sobre {professional.name}</span>
+              <span class="team-more__arrow" aria-hidden="true">→</span>
+            </button>
           </div>
         </li>
       ))}
     </ul>
+    </div>
+    ))}
   </div>
+
+  {professionals.map((professional, i) => (
+    <InfoDialog
+      id={`profesional-${slug(professional.name)}`}
+      labelledby={`profesional-${slug(professional.name)}-nombre`}
+      accent={accents[i % accents.length]}
+    >
+      <div class="bio-header">
+        <div class="team-photo team-photo--dialog">
+          <img src={`${base}${professional.image}`} alt="" width="600" height="600" loading="lazy" decoding="async" />
+        </div>
+        <div>
+          <h2 class="bio-name" id={`profesional-${slug(professional.name)}-nombre`}>{professional.name}</h2>
+          {professional.role && <p class="bio-role">{professional.role}</p>}
+        </div>
+      </div>
+      {bioOf(professional)
+        ? <p class="bio-text">{bioOf(professional)}</p>
+        : <p class="bio-text bio-text--pending">La presentación de {firstName(professional.name)} estará disponible próximamente.</p>}
+    </InfoDialog>
+  ))}
 </section>
 
 <script>
@@ -114,9 +166,41 @@ const accents = [
     }
   }
 
-  .team-info h3 {
+  /* ─── Áreas: subtítulo centrado con una línea del color del área ─── */
+  .team-area + .team-area {
+    margin-top: 4.5rem;
+  }
+
+  .team-area__title {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 40rem;
+    margin: 0 auto 2.25rem;
+    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+    color: var(--color-text);
+  }
+
+  .team-area__title::before,
+  .team-area__title::after {
+    content: '';
+    flex: 1;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, var(--area));
+  }
+
+  .team-area__title::after {
+    background: linear-gradient(90deg, var(--area), transparent);
+  }
+
+  /* h4 no tiene estilo global de título: se le da el mismo que a los nombres antes */
+  .team-info h4 {
     margin: 0;
+    font-family: var(--font-heading);
     font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
     color: var(--color-text);
   }
 
@@ -124,6 +208,100 @@ const accents = [
     margin: 0.3rem 0 0;
     font-size: 1.05rem;
     color: var(--color-text);
+  }
+
+  /* "Conocé más": enlace discreto, más chico que el rol, subrayado fino */
+  .team-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.6rem;
+    padding: 0.2rem 0.1rem;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: color-mix(in srgb, var(--color-muted) 45%, transparent);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .team-more__arrow {
+    display: inline-block;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .team-more:hover,
+  .team-more:active,
+  .team-more:focus-visible {
+    color: var(--color-text);
+    text-decoration-color: var(--accent);
+  }
+
+  .team-more:hover .team-more__arrow,
+  .team-more:active .team-more__arrow {
+    transform: translateX(3px);
+  }
+
+  .team-more:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ─── Contenido de la ventana de cada profesional (la ventana es InfoDialog) ─── */
+  .bio-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 0 3rem 1.5rem 0;
+  }
+
+  .team-photo.team-photo--dialog {
+    flex-shrink: 0;
+    width: 7.5rem;
+    padding: 4px;
+    box-shadow: 0 0 0 3px var(--accent);
+  }
+
+  .bio-name {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+    color: var(--color-text);
+  }
+
+  .bio-role {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    color: var(--color-text);
+  }
+
+  .bio-text {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .bio-text--pending {
+    font-style: italic;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* ─── Celular: una persona por fila, foto grande ─── */
@@ -140,12 +318,27 @@ const accents = [
       width: min(80vw, 20rem);
     }
 
-    .team-info h3 {
+    .team-info h4 {
       font-size: 1.5rem;
+    }
+
+    .team-area + .team-area {
+      margin-top: 3.5rem;
     }
 
     .role {
       font-size: 1.05rem;
+    }
+
+    /* En la ventana: foto arriba y nombre/rol centrados debajo */
+    .bio-header {
+      flex-direction: column;
+      margin: 0.5rem 0 1.25rem;
+      text-align: center;
+    }
+
+    .bio-text {
+      text-align: center;
     }
   }
 
