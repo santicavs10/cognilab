@@ -53,8 +53,7 @@ import Eyebrow from './Eyebrow.astro';
         </label>
         <label>
           Celular
-          <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 2345-6789" autocomplete="tel" inputmode="tel" aria-describedby="telefono-ayuda" required />
-          <small id="telefono-ayuda" class="field-hint">Si no es de Argentina, empezalo con + y el código del país.</small>
+          <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 2345-6789" autocomplete="tel" inputmode="tel" required />
         </label>
         <label>
           Mensaje
@@ -112,12 +111,27 @@ import Eyebrow from './Eyebrow.astro';
   }
 
   const telefonoInput = document.getElementById('telefono');
-  const checkPhone = () =>
-    telefonoInput.setCustomValidity(
-      !telefonoInput.value.trim() || isValidPhone(telefonoInput.value)
-        ? ''
-        : 'Revisá el número: parece que le falta o le sobra algún dígito. Si no es de Argentina, empezalo con + y el código del país (ej: +598 99 123 456).'
-    );
+  // ¿El número no puede ser argentino? (área que no empieza con 1, 2 o 3, o demasiados dígitos)
+  // En ese caso probablemente sea de otro país escrito sin el +.
+  function looksForeign(raw) {
+    if (/^\s*(\+|00)/.test(raw)) return false;
+    let d = raw.replace(/\D/g, '');
+    if (d.startsWith('0')) d = d.slice(1);
+    if (/^9[123]/.test(d) && d.length >= 9) d = d.slice(1);
+    if (d.startsWith('54') && d.length >= 12) return false;
+    return !/^(1|2|3)/.test(d) || d.length > 13;
+  }
+
+  const checkPhone = () => {
+    const value = telefonoInput.value;
+    let message = '';
+    if (value.trim() && !isValidPhone(value)) {
+      message = looksForeign(value)
+        ? 'Si es un número de otro país, escribilo con + y el código del país (ej: +598 99 123 456).'
+        : 'Revisá el número: parece que le falta o le sobra algún dígito.';
+    }
+    telefonoInput.setCustomValidity(message);
+  };
   telefonoInput.addEventListener('input', () => {
     telefonoInput.value = telefonoInput.value.replace(/[^\d\+\s\-\(\)\.]/g, '');
     checkPhone();
@@ -197,12 +211,6 @@ import Eyebrow from './Eyebrow.astro';
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-soft);
     padding: 1.5rem;
-  }
-
-  .field-hint {
-    margin-top: -0.2rem;
-    color: var(--color-muted);
-    font-size: 0.85rem;
   }
 
   form label {
