@@ -47,7 +47,7 @@ export const specialties = [
   {
     title: 'Psicología',
     description:
-      'Se abordan aspectos emocionales, conductuales y sociales del desarrollo de niños, adolescentes y adultos jóvenes, promoviendo recursos que favorezcan su bienestar y su desenvolvimiento en los distintos ámbitos de la vida cotidiana.',
+      'Se abordan aspectos emocionales, conductuales y sociales del desarrollo de niños, adolescentes y adultos jóvenes, promoviendo recursos que favorezcan su bienestar y su desenvolvimiento en su día a día.',
     icon: 'psicologia-cerebro'
   },
   {
