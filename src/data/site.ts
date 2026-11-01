@@ -80,7 +80,7 @@ export interface Service {
 export const services: Service[] = [
   {
     slug: 'evaluacion',
-    title: 'Evaluación',
+    title: 'Evaluación neuropsicológica',
     description: 'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo estas se manifiestan en diferentes ámbitos de la vida.',
     body: [
       'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo estas se manifiestan en diferentes ámbitos de la vida.',
@@ -122,7 +122,7 @@ export const services: Service[] = [
         title: 'ADOS-2 y ADI-R',
         specific: true,
         body: [
-          'En CogniLab también realizamos evaluaciones específicas para la exploración del espectro autista mediante ADOS-2 y ADI-R.',
+          'En CogniLab también realizamos evaluaciones específicas para explorar conductas del espectro autista mediante ADOS-2 y ADI-R.',
           {
             list: [
               'ADOS-2: instrumento de evaluación que, mediante actividades semiestructuradas, permite observar aspectos de la comunicación, la interacción social y determinados patrones de comportamiento.',
