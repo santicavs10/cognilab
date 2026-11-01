@@ -78,6 +78,7 @@ Reglas:
 Website\
 ├── AGENTS.md          reglas para el asistente de IA (fuera de Git)
 ├── banco-imagenes\    originales de fotos (fuera de Git)
+├── info_manual\       material de contenido, p. ej. las bios del equipo en Excel (fuera de Git)
 └── cognilab\          este repositorio
 ```
 

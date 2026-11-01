@@ -112,7 +112,7 @@ export const services = [
 // role es opcional: si está vacío, no se muestra. Define el área donde aparece.
 // position (opcional): cargo en el centro, se muestra debajo del rol.
 // bio (opcional): formación y experiencia, un ítem por renglón, para la ventana "Conocé más".
-//   Fuente: info_manual/Descripciones conoce mas.xlsx. Sin bio se muestra un aviso provisorio.
+//   Fuente: ../info_manual/Descripciones conoce mas.xlsx (fuera del repo). Sin bio se muestra un aviso provisorio.
 export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',
@@ -180,7 +180,14 @@ export const professionals = [
   {
     name: 'Lic. Felisa Corbacho',
     role: 'Psicopedagoga',
-    image: '/images/equipo-felisa-corbacho.jpg'
+    image: '/images/equipo-felisa-corbacho.jpg',
+    bio: [
+      'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
+      'Maestría en Neuropsicología Aplicada – Hospital Italiano de Buenos Aires',
+      'Experiencia en procesos de acompañamiento e inclusión escolar en distintas instituciones',
+      'Experiencia como tutora de estudiantes con dificultades de aprendizaje',
+      'Experiencia en atención clínica psicopedagógica'
+    ]
   },
   {
     name: 'Lic. Adriana Acosta',
