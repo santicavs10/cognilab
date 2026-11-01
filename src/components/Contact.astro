@@ -53,7 +53,8 @@ import Eyebrow from './Eyebrow.astro';
         </label>
         <label>
           Celular
-          <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 2345-6789" autocomplete="tel" inputmode="tel" required />
+          <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 2345-6789" autocomplete="tel" inputmode="tel" aria-describedby="telefono-ayuda" required />
+          <small id="telefono-ayuda" class="field-hint">Si no es de Argentina, empezalo con + y el código del país.</small>
         </label>
         <label>
           Mensaje
@@ -93,7 +94,8 @@ import Eyebrow from './Eyebrow.astro';
     const international = /^\s*(\+|00)/.test(raw);
     let d = raw.replace(/\D/g, '');
     if (raw.trim().startsWith('00')) d = d.slice(2);
-    if (international && !d.startsWith('54')) return d.length >= 8 && d.length <= 15;
+    // Otros países: código de país + número, entre 7 y 15 dígitos en total (estándar internacional E.164)
+    if (international && !d.startsWith('54')) return d.length >= 7 && d.length <= 15;
     if (d.startsWith('54') && (international || d.length >= 12)) d = d.slice(2);
     if (d.startsWith('0')) d = d.slice(1);
     if (d.startsWith('9') && (d.length === 11 || d.length === 13)) d = d.slice(1);
@@ -114,7 +116,7 @@ import Eyebrow from './Eyebrow.astro';
     telefonoInput.setCustomValidity(
       !telefonoInput.value.trim() || isValidPhone(telefonoInput.value)
         ? ''
-        : 'Revisá el número: parece que le falta o le sobra algún dígito. Ej: 11 3444-5533 o +54 9 11 3444-5533.'
+        : 'Revisá el número: parece que le falta o le sobra algún dígito. Si no es de Argentina, empezalo con + y el código del país (ej: +598 99 123 456).'
     );
   telefonoInput.addEventListener('input', () => {
     telefonoInput.value = telefonoInput.value.replace(/[^\d\+\s\-\(\)\.]/g, '');
@@ -195,6 +197,12 @@ import Eyebrow from './Eyebrow.astro';
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-soft);
     padding: 1.5rem;
+  }
+
+  .field-hint {
+    margin-top: -0.2rem;
+    color: var(--color-muted);
+    font-size: 0.85rem;
   }
 
   form label {
