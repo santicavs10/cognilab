@@ -446,7 +446,7 @@ export const gallery = [
   },
   {
     src: '/images/nuestro-espacio-14.jpg',
-    alt: 'Juego de encastre con aros de colores y un lapicero en forma de lápiz sobre la mesa'
+    alt: 'Mano colocando aros de colores en un juego de encastre'
   },
   {
     src: '/images/nuestro-espacio-15.jpg',
