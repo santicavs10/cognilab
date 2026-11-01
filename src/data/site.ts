@@ -9,7 +9,7 @@ export const siteConfig = {
   whatsappMessage: 'Hola, quiero pedir información',
   email: 'equipo.cognilab@gmail.com',
   address: 'Av. Juramento 2017 6 "B", Belgrano, CABA',
-  instagram: 'https://instagram.com/cognilab',
+  instagram: 'https://www.instagram.com/equipo.cognilab/',
   maps: 'https://www.google.com/maps/search/Av.+Juramento+2017+6+B,+Belgrano,+Buenos+Aires',
   hours: 'Lunes a viernes de 9:00 a 19:00'
 };
@@ -273,7 +273,7 @@ export const professionals = [
     position: 'Directora',
     image: '/images/equipo-rocio-do-pazo.jpg',
     bio: [
-      'Lic. y Prof. en Psicopedagogía – Universidad Católica Argentina (UCA)',
+      'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
       'Maestría en Neuropsicología Aplicada – Universidad Hospital Italiano de Buenos Aires',
       'Posgrado en Neuropsicología del Aprendizaje Infanto-Juvenil – Universidad Favaloro',
       'Profesorado de Nivel Medio y Superior – UCA',

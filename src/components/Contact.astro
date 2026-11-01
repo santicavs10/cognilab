@@ -45,11 +45,15 @@ import Eyebrow from './Eyebrow.astro';
 
         <label>
           Nombre
-          <input type="text" name="nombre" placeholder="Tu nombre" required />
+          <input type="text" name="nombre" placeholder="Tu nombre" autocomplete="name" required />
         </label>
         <label>
-          Teléfono
-          <input type="tel" id="telefono" name="telefono" placeholder="Ej: +54 11 1234-5678" pattern="[\+\d\s\-\(\)]{6,20}" title="Solo números, +, espacios o guiones" required />
+          Correo electrónico
+          <input type="email" name="email" placeholder="Ej: nombre@gmail.com" autocomplete="email" required />
+        </label>
+        <label>
+          Celular
+          <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 2345-6789" autocomplete="tel" inputmode="tel" required />
         </label>
         <label>
           Mensaje
@@ -80,10 +84,50 @@ import Eyebrow from './Eyebrow.astro';
 </section>
 
 <script is:inline>
+  // ¿Parece un número de celular real? Sigue el plan de numeración argentino: el número
+  // nacional tiene siempre 10 dígitos (código de área + número) y el área empieza con 1, 2 o 3.
+  // Acepta las formas habituales: +54 9 11 3444-5533, 54 9 ..., 911 3444 5533, 011 15 3444-5533,
+  // 11 3444 5533, 15 3444 5533 (sin código de área) y números de otros países con +.
+  // No distingue celular de fijo (en Argentina comparten formato); detecta dígitos de más o de menos.
+  function isValidPhone(raw) {
+    const international = /^\s*(\+|00)/.test(raw);
+    let d = raw.replace(/\D/g, '');
+    if (raw.trim().startsWith('00')) d = d.slice(2);
+    if (international && !d.startsWith('54')) return d.length >= 8 && d.length <= 15;
+    if (d.startsWith('54') && (international || d.length >= 12)) d = d.slice(2);
+    if (d.startsWith('0')) d = d.slice(1);
+    if (d.startsWith('9') && (d.length === 11 || d.length === 13)) d = d.slice(1);
+    // Local con 15 y sin código de área: 15 + 6 a 8 dígitos
+    if (/^15[2-9]\d{5,7}$/.test(d)) return true;
+    // Código de área (2 a 4 dígitos) + 15 + número: se quita el 15
+    if (d.length === 12) {
+      const sinQuince = [2, 3, 4].map((n) => (d.slice(n, n + 2) === '15' ? d.slice(0, n) + d.slice(n + 2) : '')).find(Boolean);
+      if (sinQuince) d = sinQuince;
+    }
+    if (d.length !== 10) return false;
+    // Área 11 (AMBA): el número no empieza con 0 ni 1. Las demás áreas empiezan con 2 o 3.
+    return /^11[2-9]/.test(d) || /^[23]/.test(d);
+  }
+
   const telefonoInput = document.getElementById('telefono');
+  const checkPhone = () =>
+    telefonoInput.setCustomValidity(
+      !telefonoInput.value.trim() || isValidPhone(telefonoInput.value)
+        ? ''
+        : 'Revisá el número: parece que le falta o le sobra algún dígito. Ej: 11 3444-5533 o +54 9 11 3444-5533.'
+    );
   telefonoInput.addEventListener('input', () => {
-    telefonoInput.value = telefonoInput.value.replace(/[^\d\+\s\-\(\)]/g, '');
+    telefonoInput.value = telefonoInput.value.replace(/[^\d\+\s\-\(\)\.]/g, '');
+    checkPhone();
   });
+
+  // Un campo con solo espacios no cuenta como completo
+  const textFields = document.querySelectorAll('#contact-form input[type="text"], #contact-form textarea');
+  textFields.forEach((field) =>
+    field.addEventListener('input', () =>
+      field.setCustomValidity(field.value && !field.value.trim() ? 'Completá este campo.' : '')
+    )
+  );
 
   const form = document.getElementById('contact-form');
   const submitBtn = document.getElementById('submit-btn');
