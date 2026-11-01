@@ -47,9 +47,10 @@ const rich = (text: string) =>
     scroll-margin-top: 80px;
   }
 
+  /* Entre bloques, el mismo espacio que hay entre secciones del sitio (medido: 160px escritorio, 144px celular) */
   .hero-blocks {
     display: grid;
-    gap: 4.5rem;
+    gap: 10rem;
   }
 
   /* Texto a la izquierda y foto a la derecha; en los bloques pares, al revés (zigzag) */
@@ -93,8 +94,14 @@ const rich = (text: string) =>
     color: var(--color-text);
   }
 
+  /* Justificado con corte de palabras en sílabas (español, por lang="es") para que no queden huecos;
+     text-wrap: pretty evita una palabra sola en el último renglón */
   .hero-description p {
     margin: 0;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    text-wrap: pretty;
   }
 
   .hero-description p + p {
@@ -135,10 +142,6 @@ const rich = (text: string) =>
       padding-top: 2rem;
     }
 
-    .hero-blocks {
-      gap: 3.5rem;
-    }
-
     .hero-grid,
     .hero-grid--reverse {
       grid-template-columns: 1fr;
@@ -170,6 +173,15 @@ const rich = (text: string) =>
   @media (max-width: 600px) {
     .hero {
       padding: 3rem 0 4rem;
+    }
+
+    .hero-blocks {
+      gap: 9rem;
+    }
+
+    /* En celular los renglones son cortos: justificado deja huecos, mejor alineado a la izquierda */
+    .hero-description p {
+      text-align: left;
     }
 
     .hero-description {

@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'CogniLab',
   tagline: 'Psicología y psicopedagogía para niños, adolescentes y familias',
-  // Meta descripción (Google y links compartidos): primer párrafo de "Quiénes somos", sin negritas
+  // Meta descripción (Google y links compartidos): primer párrafo de "Conocé CogniLab", sin negritas
   description:
     'En CogniLab trabajamos desde una mirada integral e interdisciplinaria, acompañando a niños, adolescentes y sus familias en desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional.',
   phone: '+54 9 11 7385-5741',
@@ -18,13 +18,14 @@ export const siteConfig = {
 // Fuente: ../info_manual/Nuestro enfoque.docx. **texto** = negrita.
 export const about = [
   {
-    title: 'Quiénes somos',
+    title: 'Conocé CogniLab',
     image: '/images/nuestro-enfoque.jpg',
     imageWidth: 889,
     imageHeight: 1333,
     alt: 'Escritorio de trabajo de CogniLab con materiales de evaluación, juegos didácticos y un cuaderno con el logo',
     paragraphs: [
-      'En CogniLab trabajamos desde una **mirada integral e interdisciplinaria**, acompañando a **niños, adolescentes y sus familias** en desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional.',
+      // ­ = guion opcional: "inter-disciplinaria" se corta solo si hace falta, para no estirar el renglón
+      'En CogniLab trabajamos desde una **mirada integral e inter­disciplinaria**, acompañando a **niños, adolescentes y sus familias** en desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional.',
       'También acompañamos a **adultos jóvenes** en los desafíos propios de la vida universitaria y la inserción en el mundo laboral, brindando herramientas que favorezcan la autonomía, la organización y el desarrollo de sus habilidades personales y académicas.'
     ]
   },
