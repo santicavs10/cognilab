@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'CogniLab: Nuestro enfoque',
   tagline: 'Psicología y psicopedagogía para niños, adolescentes y familias',
   description:
-    'En Cognilab trabajamos desde una mirada integral e interdisciplinaria, acompañando a niños, adolescentes y sus familias en los desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional. Entendemos que cada proceso es único, por eso proponemos intervenciones cuidadosas, basadas en evidencia y construidas en articulación con la familia, la escuela y otros profesionales, con el propósito de favorecer avances significativos y una mejor calidad de vida.',
+    'En CogniLab trabajamos desde una mirada integral e interdisciplinaria, acompañando a niños, adolescentes y sus familias en los desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional. Entendemos que cada proceso es único, por eso proponemos intervenciones cuidadosas, basadas en evidencia y construidas en articulación con la familia, la escuela y otros profesionales, con el propósito de favorecer avances significativos y una mejor calidad de vida.',
   phone: '+54 9 11 7385-5741',
   whatsapp: '5491173855741',
   whatsappMessage: 'Hola, quiero pedir información',
@@ -109,12 +109,14 @@ export const services = [
   }
 ];
 
-// role es opcional: si está vacío, no se muestra.
+// role es opcional: si está vacío, no se muestra. Define el área donde aparece.
+// position (opcional): cargo en el centro, se muestra debajo del rol.
 // bio (opcional): presentación que se ve en la ventana "Conocé más"; sin bio se muestra un aviso provisorio.
 export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',
     role: 'Psicopedagoga',
+    position: 'Directora de CogniLab',
     image: '/images/equipo-rocio-do-pazo.jpg'
   },
   {

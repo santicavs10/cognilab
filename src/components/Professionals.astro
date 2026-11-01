@@ -7,6 +7,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const slug = (name: string) =>
   name.replace(/^Lic\.\s*/, '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, '-');
 const bioOf = (p: (typeof professionals)[number]) => (p as { bio?: string }).bio ?? '';
+const positionOf = (p: (typeof professionals)[number]) => (p as { position?: string }).position ?? '';
 const firstName = (name: string) => name.replace(/^Lic\.\s*/, '').split(' ')[0];
 
 // Áreas en orden de aparición; cada profesional va al área de su rol.
@@ -60,6 +61,7 @@ const ordered = areas
           <div class="team-info">
             <h4>{professional.name}</h4>
             {professional.role && <p class="role">{professional.role}</p>}
+            {positionOf(professional) && <p class="position">{positionOf(professional)}</p>}
             <button
               class="team-more"
               type="button"
@@ -90,6 +92,7 @@ const ordered = areas
         <div>
           <h2 class="bio-name" id={`profesional-${slug(professional.name)}-nombre`}>{professional.name}</h2>
           {professional.role && <p class="bio-role">{professional.role}</p>}
+          {positionOf(professional) && <p class="bio-role position">{positionOf(professional)}</p>}
         </div>
       </div>
       {bioOf(professional)
@@ -212,6 +215,14 @@ const ordered = areas
   .role {
     margin: 0.3rem 0 0;
     font-size: 1.05rem;
+    color: var(--color-text);
+  }
+
+  /* Cargo (por ejemplo, dirección): misma separación que el rol, algo más destacado */
+  .position {
+    margin: 0.3rem 0 0;
+    font-size: 1rem;
+    font-weight: 600;
     color: var(--color-text);
   }
 
