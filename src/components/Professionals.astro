@@ -3,12 +3,17 @@ import { professionals } from '../data/site';
 import InfoDialog from './InfoDialog.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// "Lic. María José Carnelli" -> "maria-jose-carnelli" (id de su ventana)
+type Professional = (typeof professionals)[number];
+
+// "María José Carnelli" -> "maria-jose-carnelli" (id de su ventana)
 const slug = (name: string) =>
-  name.replace(/^Lic\.\s*/, '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, '-');
-const bioOf = (p: (typeof professionals)[number]) => (p as { bio?: string[] }).bio ?? [];
-const positionOf = (p: (typeof professionals)[number]) => (p as { position?: string }).position ?? '';
-const firstName = (name: string) => name.replace(/^Lic\.\s*/, '').split(' ')[0];
+  name.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, '-');
+const bioOf = (p: Professional) => (p as { bio?: string[] }).bio ?? [];
+const positionOf = (p: Professional) => (p as { position?: string }).position ?? '';
+const titleOf = (p: Professional) => (p as { title?: string }).title ?? '';
+const firstName = (name: string) => name.split(' ')[0];
+// Cada ítem de la bio se muestra terminado en punto
+const withPeriod = (item: string) => (item.endsWith('.') ? item : `${item}.`);
 
 // Áreas en orden de aparición; cada profesional va al área de su rol.
 // El color del área es el mismo de su tarjeta en "Nuestras especialidades".
@@ -29,10 +34,18 @@ const accents = [
   'var(--color-pink)'
 ];
 
-// Colores en el orden en que se ven (área por área), así nunca se repiten seguidos
-const ordered = areas
-  .flatMap((area) => professionals.filter((p) => p.role === area.role))
-  .map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
+// Grupos en orden: primero quien tiene un cargo (dirección), sin subtítulo; después cada área
+const groups = [
+  { title: '', accent: '', members: professionals.filter((p) => positionOf(p)) },
+  ...areas.map((area) => ({
+    ...area,
+    members: professionals.filter((p) => p.role === area.role && !positionOf(p))
+  }))
+];
+
+// Colores en el orden en que se ven, así nunca se repiten seguidos
+const ordered = groups.flatMap((g) => g.members).map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
+const accentOf = (p: Professional) => ordered.find((o) => o.name === p.name)?.accent ?? accents[0];
 ---
 
 <section class="section section--alt" id="profesionales">
@@ -41,12 +54,12 @@ const ordered = areas
       <h2 class="section-title">Nuestro equipo</h2>
     </div>
 
-    {areas.map((area) => (
-    <div class="team-area" style={`--area: ${area.accent}`}>
-    <h3 class="team-area__title" data-reveal>{area.title}</h3>
+    {groups.filter((g) => g.members.length).map((group) => (
+    <div class="team-area" style={group.accent ? `--area: ${group.accent}` : undefined}>
+    {group.title && <h3 class="team-area__title" data-reveal>{group.title}</h3>}
     <ul class="team-list">
-      {ordered.filter((p) => p.role === area.role).map((professional) => (
-        <li class="team-member" style={`--accent: ${professional.accent}`} data-reveal>
+      {group.members.map((professional) => (
+        <li class="team-member" style={`--accent: ${accentOf(professional)}`} data-reveal>
           <div class="team-photo">
             <img
               src={`${base}${professional.image}`}
@@ -61,7 +74,7 @@ const ordered = areas
           <div class="team-info">
             <h4>{professional.name}</h4>
             {positionOf(professional) && <p class="position">{positionOf(professional)}</p>}
-            {professional.role && <p class="role">{professional.role}</p>}
+            {titleOf(professional) && <p class="role">{titleOf(professional)}</p>}
             <button
               class="team-more"
               type="button"
@@ -92,11 +105,11 @@ const ordered = areas
         <div>
           <h2 class="bio-name" id={`profesional-${slug(professional.name)}-nombre`}>{professional.name}</h2>
           {positionOf(professional) && <p class="bio-role position">{positionOf(professional)}</p>}
-          {professional.role && <p class="bio-role">{professional.role}</p>}
+          {titleOf(professional) && <p class="bio-role">{titleOf(professional)}</p>}
         </div>
       </div>
       {bioOf(professional).length
-        ? <ul class="bio-list">{bioOf(professional).map((item) => <li>{item}</li>)}</ul>
+        ? <ul class="bio-list">{bioOf(professional).map((item) => <li>{withPeriod(item)}</li>)}</ul>
         : <p class="bio-text bio-text--pending">La presentación de {firstName(professional.name)} estará disponible próximamente.</p>}
     </InfoDialog>
   ))}

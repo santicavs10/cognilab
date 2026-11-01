@@ -137,16 +137,18 @@ export const services = [
   }
 ];
 
-// role es opcional: si está vacío, no se muestra. Define el área donde aparece.
-// position (opcional): cargo en el centro, se muestra arriba del rol.
+// name: sin "Lic."; el título va aparte, en title, y se muestra debajo del nombre.
+// role: define el área donde aparece (Psicopedagoga / Psicóloga); no se muestra.
+// position (opcional): cargo en el centro; quien lo tiene se muestra arriba de las áreas.
 // bio (opcional): formación y experiencia, un ítem por renglón, para la ventana "Conocé más".
 //   Fuente: ../info_manual/TEXTOS PAGINA WEB- CVS.docx, 3.ª columna de la tabla (fuera del repo).
-//   Criterio: sin punto final en cada ítem. Sin bio se muestra un aviso provisorio.
-//   Ajustes pedidos sobre el Word: Agustina y Florencia figuran como "Lic. y Prof.".
+//   Al mostrarse, cada ítem termina en punto. Sin bio se muestra un aviso provisorio.
+//   Ajuste pedido sobre el Word: Florencia "Universidad del Salvador (USAL)".
 export const professionals = [
   {
-    name: 'Lic. Rocío Do Pazo',
+    name: 'Rocío Do Pazo',
     role: 'Psicopedagoga',
+    title: 'Lic. y Prof. en Psicopedagogía',
     position: 'Directora de CogniLab',
     image: '/images/equipo-rocio-do-pazo.jpg',
     bio: [
@@ -160,11 +162,12 @@ export const professionals = [
     ]
   },
   {
-    name: 'Lic. Florencia Morales Ponce',
+    name: 'Florencia Morales Ponce',
     role: 'Psicóloga',
+    title: 'Lic. y Prof. en Psicología',
     image: '/images/equipo-florencia-morales-ponce.jpg',
     bio: [
-      'Lic. y Prof. en Psicología – Universidad del Salvador',
+      'Lic. en Psicología – Universidad del Salvador (USAL)',
       'Formación en Aplicación de Técnicas Cognitivas y Conductuales – CETECIC',
       'Formación anual en Terapia Dialéctico-Conductual (DBT) y Habilidades – Habilidades para el Cambio',
       'Tramo de Formación Pedagógica – Universidad FASTA',
@@ -176,8 +179,9 @@ export const professionals = [
     ]
   },
   {
-    name: 'Lic. Aldana Almirón',
+    name: 'Aldana Almirón',
     role: 'Psicopedagoga',
+    title: 'Lic. en Psicopedagogía',
     image: '/images/equipo-aldana-almiron.jpg',
     bio: [
       'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
@@ -190,11 +194,12 @@ export const professionals = [
     ]
   },
   {
-    name: 'Lic. Agustina Ceresetto',
+    name: 'Agustina Ceresetto',
     role: 'Psicopedagoga',
+    title: 'Lic. y Prof. en Psicopedagogía',
     image: '/images/equipo-agustina-ceresetto.jpg',
     bio: [
-      'Lic. y Prof. en Psicopedagogía – Universidad Católica Argentina (UCA)',
+      'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
       'Profesorado de Nivel Superior – UCA',
       'Curso de Neuroeducación y Educación Emocional – Asociación Psi',
       'Experiencia en atención clínica psicopedagógica y tutorías académicas',
@@ -202,8 +207,9 @@ export const professionals = [
     ]
   },
   {
-    name: 'Lic. María José Carnelli',
+    name: 'María José Carnelli',
     role: 'Psicopedagoga',
+    title: 'Lic. en Psicopedagogía',
     image: '/images/equipo-maria-jose-carnelli.jpg',
     bio: [
       'Lic. en Psicopedagogía – Universidad de Morón',
@@ -215,8 +221,9 @@ export const professionals = [
     ]
   },
   {
-    name: 'Lic. Felisa Corbacho',
+    name: 'Felisa Corbacho',
     role: 'Psicopedagoga',
+    title: 'Lic. en Psicopedagogía',
     image: '/images/equipo-felisa-corbacho.jpg',
     bio: [
       'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
@@ -228,8 +235,9 @@ export const professionals = [
     ]
   },
   {
-    name: 'Lic. Adriana Acosta',
+    name: 'Adriana Acosta',
     role: 'Psicóloga',
+    title: 'Lic. en Psicología',
     image: '/images/equipo-adriana-acosta.jpg',
     bio: [
       'Lic. en Psicología – Universidad de Buenos Aires (UBA)',
@@ -246,8 +254,9 @@ export const professionals = [
     ]
   },
   {
-    name: 'Lic. Alma Brea Lucchelli',
+    name: 'Alma Brea Lucchelli',
     role: 'Psicóloga',
+    title: 'Lic. y Prof. en Psicología',
     image: '/images/equipo-alma-brea-lucchelli.jpg',
     bio: [
       'Lic. y Prof. en Psicología – Universidad de Buenos Aires (UBA)',
@@ -312,7 +321,7 @@ export const gallery = [
   },
   {
     src: '/images/nuestro-espacio-13.jpg',
-    alt: 'Cuaderno abierto con un dibujo de vacaciones, junto a lápices y marcadores de colores'
+    alt: 'Profesional leyendo un libro infantil ilustrado, junto a lapiceros con marcadores de colores'
   },
   {
     src: '/images/nuestro-espacio-14.jpg',
