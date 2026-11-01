@@ -137,7 +137,7 @@ export const services: Service[] = [
   {
     slug: 'tratamiento-psicologico',
     title: 'Tratamiento psicológico',
-    description: 'Espacio terapéutico individual para niños, adolescentes y adultos jóvenes. Acompañamos el desarrollo emocional y personal, trabajando sobre el reconocimiento y la regulación de las emociones, los vínculos y las conductas. Desde una orientación cognitivo-conductual, promovemos el desarrollo de herramientas y estrategias que favorezcan el bienestar y los recursos personales.',
+    description: 'Espacio terapéutico individual para niños, adolescentes y adultos jóvenes. Acompañamos el desarrollo emocional y personal, trabajando sobre el reconocimiento y la regulación de las emociones, los vínculos y las conductas.',
     body: [
       'Ofrecemos un espacio terapéutico individual para niños, adolescentes y adultos jóvenes, orientado a acompañar su desarrollo emocional, personal y vincular.',
       'Trabajamos desde una **orientación cognitivo-conductual**, que considera la relación entre pensamientos, emociones y conductas. Buscamos comprender las necesidades de cada persona y desarrollar herramientas y estrategias que favorezcan su bienestar y desenvolvimiento en la vida cotidiana.',
@@ -154,7 +154,7 @@ export const services: Service[] = [
         ]
       },
       { h: '¿Cómo trabajamos?' },
-      'El proceso comienza con entrevistas iniciales para conocer el motivo de consulta, los antecedentes y las necesidades de cada persona. A partir de allí, se establecen objetivos terapéuticos y se planifica un abordaje individualizado.',
+      'El proceso comienza con entrevistas iniciales para conocer el motivo de consulta, los antecedentes y las necesidades de cada persona. A partir de esto, se establecen objetivos terapéuticos y se planifica un abordaje individualizado.',
       'En el caso de niños y adolescentes, la participación de las familias es una parte importante del proceso. Se alternan sesiones individuales con el niño o adolescente y espacios de orientación familiar, así como también la articulación con la escuela y otros profesionales intervinientes.',
       { h: '¿Cuánto dura un tratamiento?' },
       'La duración y frecuencia de los encuentros se definen de acuerdo con las necesidades y los objetivos de cada proceso. El abordaje se revisa a lo largo del tratamiento, considerando la evolución y los avances de cada persona.'
