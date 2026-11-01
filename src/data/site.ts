@@ -111,23 +111,53 @@ export const services = [
 
 // role es opcional: si está vacío, no se muestra. Define el área donde aparece.
 // position (opcional): cargo en el centro, se muestra debajo del rol.
-// bio (opcional): presentación que se ve en la ventana "Conocé más"; sin bio se muestra un aviso provisorio.
+// bio (opcional): formación y experiencia, un ítem por renglón, para la ventana "Conocé más".
+//   Fuente: info_manual/Descripciones conoce mas.xlsx. Sin bio se muestra un aviso provisorio.
 export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',
     role: 'Psicopedagoga',
     position: 'Directora de CogniLab',
-    image: '/images/equipo-rocio-do-pazo.jpg'
+    image: '/images/equipo-rocio-do-pazo.jpg',
+    bio: [
+      'Lic. y Prof. en Psicopedagogía – UCA',
+      'Maestría en Neuropsicología Aplicada – Universidad Hospital Italiano de Buenos Aires',
+      'Posgrado en Neuropsicología del Aprendizaje Infanto-Juvenil – Universidad Favaloro',
+      'Profesorado de Nivel Medio y Superior – UCA',
+      'Experiencia clínica en evaluaciones neuropsicológicas, tratamiento psicopedagógico y tutorías académicas',
+      'Experiencia en Equipos de Orientación Escolar de nivel inicial, primario y secundario',
+      'Coordinación de proyectos de inclusión y acompañamiento escolar'
+    ]
   },
   {
     name: 'Lic. Florencia Morales Ponce',
     role: 'Psicóloga',
-    image: '/images/equipo-florencia-morales-ponce.jpg'
+    image: '/images/equipo-florencia-morales-ponce.jpg',
+    bio: [
+      'Lic. en Psicología – Universidad del Salvador',
+      'Tramo de Formación Pedagógica – Universidad FASTA',
+      'Formación en Trastornos del Espectro Autista (TEA) – ETCI',
+      'Formación en Abordaje Psicopedagógico de los Trastornos del Neurodesarrollo – FLENI',
+      'Formación en Aplicación de Técnicas Cognitivas y Conductuales – CETECIC',
+      'Formación anual en Terapia Dialéctico-Conductual (DBT) y Habilidades – Habilidades para el Cambio',
+      'Experiencia como psicóloga clínica en consultorio particular, con atención de niños, adolescentes y adultos y orientación a familias',
+      'Experiencia en integración escolar en el Centro Andalican, acompañando a niños con discapacidad y coordinando talleres grupales de habilidades sociales',
+      'Experiencia en el Centro Educativo Terapéutico Red Layla, trabajando con jóvenes con discapacidad en el desarrollo de la autonomía, las habilidades sociales, las actividades de la vida diaria y la regulación conductual'
+    ]
   },
   {
     name: 'Lic. Aldana Almirón',
     role: 'Psicopedagoga',
-    image: '/images/equipo-aldana-almiron.jpg'
+    image: '/images/equipo-aldana-almiron.jpg',
+    bio: [
+      'Lic. en Psicopedagogía – UCA',
+      'Especialización en Neurociencias Cognitivas, Neuropsicología y Rehabilitación Cognitiva',
+      'Diplomatura en Comunicación y Lenguaje en Trastornos del Neurodesarrollo',
+      'Integrante de la Unidad de Psicopedagogía del Hospital de Rehabilitación Manuel Rocca',
+      'Miembro del Comité de Discapacidad Visual y Multideficiencias del Hospital Manuel Rocca',
+      'Ex instructora de residentes del Hospital Manuel Rocca y ex residente de Psicopedagogía del Hospital Ramos Mejía',
+      'Experiencia en evaluaciones neuropsicológicas, evaluaciones del desarrollo y ADOS-2'
+    ]
   },
   {
     name: 'Lic. Agustina Ceresetto',
@@ -137,7 +167,15 @@ export const professionals = [
   {
     name: 'Lic. María José Carnelli',
     role: 'Psicopedagoga',
-    image: '/images/equipo-maria-jose-carnelli.jpg'
+    image: '/images/equipo-maria-jose-carnelli.jpg',
+    bio: [
+      'Lic. en Psicopedagogía – Universidad de Morón',
+      'Maestría en Neuropsicología – Universidad Católica Argentina',
+      'Diplomatura en Diagnóstico y Habilitación Neuropsicológica en las Dificultades de Aprendizaje – Fundación de Neuropsicología Clínica',
+      'Diplomatura de Especialización en Terapia Cognitivo-Conductual, Nivel 1 – Fundación Garrahan / A.R.I.T.A.',
+      'Experiencia clínica en evaluaciones neuropsicológicas, tratamiento psicopedagógico y tutorías académicas',
+      'Miembro de Equipo de Orientación Escolar de nivel inicial y primario'
+    ]
   },
   {
     name: 'Lic. Felisa Corbacho',
@@ -152,7 +190,14 @@ export const professionals = [
   {
     name: 'Lic. Alma Brea Lucchelli',
     role: 'Psicóloga',
-    image: '/images/equipo-alma-brea-lucchelli.jpg'
+    image: '/images/equipo-alma-brea-lucchelli.jpg',
+    bio: [
+      'Lic. y Prof. en Psicología – Universidad de Buenos Aires (UBA)',
+      'Especialización en Terapia Cognitivo-Conductual (TCC) – Colegio de Psicólogos de la Provincia',
+      'Experiencia como psicóloga en el Servicio de Salud Mental Pediátrica del Hospital Italiano de Buenos Aires',
+      'Experiencia como psicóloga en escuela de educación especial, acompañando trayectorias escolares y trabajando colaborativamente con docentes y familias',
+      'Experiencia en atención de niños y adolescentes en equipos interdisciplinarios y orientación a padres'
+    ]
   }
 ];
 

@@ -12,7 +12,8 @@ const { id, labelledby, accent } = Astro.props;
 
 <dialog class="info-dialog" id={id} style={`--accent: ${accent}`} aria-labelledby={labelledby}>
   <div class="info-dialog__card">
-    <button class="info-dialog__close" type="button" aria-label="Cerrar">
+    <!-- autofocus: al abrir, el foco va a la X (no al área desplazable, que mostraría un contorno) -->
+    <button class="info-dialog__close" type="button" aria-label="Cerrar" autofocus>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
     </button>
     <slot />
@@ -67,6 +68,9 @@ const { id, labelledby, accent } = Astro.props;
     max-height: min(85vh, 46rem);
     overflow-y: auto;
     overscroll-behavior: contain;
+    /* Barra de desplazamiento fina, del color de la ventana, que no corta las esquinas redondeadas */
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--accent) 55%, transparent) transparent;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-top: 0.45rem solid var(--accent);
