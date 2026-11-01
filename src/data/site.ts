@@ -110,7 +110,7 @@ export const services = [
 ];
 
 // role es opcional: si está vacío, no se muestra. Define el área donde aparece.
-// position (opcional): cargo en el centro, se muestra debajo del rol.
+// position (opcional): cargo en el centro, se muestra arriba del rol.
 // bio (opcional): formación y experiencia, un ítem por renglón, para la ventana "Conocé más".
 //   Fuente: ../info_manual/Descripciones conoce mas.xlsx (fuera del repo). Sin bio se muestra un aviso provisorio.
 export const professionals = [

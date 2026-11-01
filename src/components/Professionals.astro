@@ -60,8 +60,8 @@ const ordered = areas
 
           <div class="team-info">
             <h4>{professional.name}</h4>
-            {professional.role && <p class="role">{professional.role}</p>}
             {positionOf(professional) && <p class="position">{positionOf(professional)}</p>}
+            {professional.role && <p class="role">{professional.role}</p>}
             <button
               class="team-more"
               type="button"
@@ -91,8 +91,8 @@ const ordered = areas
         </div>
         <div>
           <h2 class="bio-name" id={`profesional-${slug(professional.name)}-nombre`}>{professional.name}</h2>
-          {professional.role && <p class="bio-role">{professional.role}</p>}
           {positionOf(professional) && <p class="bio-role position">{positionOf(professional)}</p>}
+          {professional.role && <p class="bio-role">{professional.role}</p>}
         </div>
       </div>
       {bioOf(professional).length
@@ -218,7 +218,7 @@ const ordered = areas
     color: var(--color-text);
   }
 
-  /* Cargo (por ejemplo, dirección): misma separación que el rol, algo más destacado */
+  /* Cargo (por ejemplo, dirección): va antes del rol, con la misma separación y algo más destacado */
   .position {
     margin: 0.3rem 0 0;
     font-size: 1rem;
