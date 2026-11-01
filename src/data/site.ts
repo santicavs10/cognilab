@@ -446,7 +446,7 @@ export const gallery = [
   },
   {
     src: '/images/nuestro-espacio-14.jpg',
-    alt: 'Mano colocando aros de colores en un juego de encastre'
+    alt: 'Mano armando un diseño con cubos rojos y blancos, frente a un cuaderno con el modelo a copiar'
   },
   {
     src: '/images/nuestro-espacio-15.jpg',
