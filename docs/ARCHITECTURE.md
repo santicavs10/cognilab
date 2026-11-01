@@ -31,6 +31,7 @@ NIC Argentina ──delega DNS──▶ Cloudflare (DNS) ──apunta a──▶
 | **DNS** | Cloudflare, zona `cognilab.com.ar` | Registros que llevan el dominio a Vercel |
 | **Dominio** | NIC Argentina (nic.ar), `cognilab.com.ar` | Registro del dominio. **Vence el 28/03/2027 y no se renueva solo.** Se gestiona desde la cuenta NIC.ar del responsable. |
 | **Estadísticas de visitas** | Cloudflare Web Analytics (dash.cloudflare.com → Web Analytics → `www.cognilab.com.ar`) | Visitas, páginas y origen, sin cookies. Token (público): `8d3aa454a2704441a113baca0cbbbecb`, guardado en `analytics` de `src/data/site.ts`; el script está en `src/layouts/MainLayout.astro`. Se eligió Cloudflare porque tiene API (para guardar el historial mes a mes) y el plan gratis de Vercel guarda solo 1 mes. Las búsquedas de Google se ven en Google Search Console. |
+| **Historial de estadísticas** | GitHub `santicavs10/cognilab-estadisticas` (**privado**) | Tarea de GitHub Actions que el día 1 de cada mes consulta la API de Cloudflare (GraphQL, `rumPageloadEventsAdaptiveGroups`, solo `www.cognilab.com.ar`) y guarda el mes en `datos/AAAA-MM.json` y en una tabla con gráfico en su README. Clave de API de Cloudflare de solo lectura (Account Analytics: Read): secreto `CLOUDFLARE_API_TOKEN` del repo; copia local en `info_manual/cloudfare-api.env` (fuera de Git). |
 | **Formulario de contacto** | Web3Forms (`api.web3forms.com`), cuenta de CogniLab | Envía por mail a equipo.cognilab@gmail.com las consultas del formulario. La clave pública (access key) está en `src/components/Contact.astro`; el mail de destino se cambia desde el panel de Web3Forms. |
 
 ### Publicación (Vercel)
@@ -81,7 +82,8 @@ Reglas:
 Website\
 ├── AGENTS.md          reglas para el asistente de IA (fuera de Git)
 ├── banco-imagenes\    originales de fotos (fuera de Git)
-├── info_manual\       material de contenido, p. ej. las bios del equipo en Excel (fuera de Git)
+├── info_manual\       material de contenido y claves locales, p. ej. cloudfare-api.env (fuera de Git)
+├── cognilab-estadisticas\  repo privado del historial de visitas
 └── cognilab\          este repositorio
 ```
 
