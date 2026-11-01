@@ -16,17 +16,22 @@ const areas = [
   { title: 'Psicología', role: 'Psicóloga', accent: 'var(--color-primary)' }
 ];
 
-// Anillo de cada foto con un color de la marca, en orden
+// Anillos: los 8 colores del logo en el orden de sus letras (c-o-g-n-i-L-a-b)
 const accents = [
-  'var(--color-primary)',
+  'var(--color-red)',
+  'var(--color-orange)',
+  'var(--color-accent)',
+  'var(--color-green)',
+  'var(--color-secondary)',
   'var(--color-secondary-strong)',
   'var(--color-purple)',
-  'var(--color-pink)',
-  'var(--color-orange)'
+  'var(--color-pink)'
 ];
 
-// El anillo se asigna por posición en la lista completa, así cada persona mantiene el suyo
-const withAccent = professionals.map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
+// Colores en el orden en que se ven (área por área), así nunca se repiten seguidos
+const ordered = areas
+  .flatMap((area) => professionals.filter((p) => p.role === area.role))
+  .map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
 ---
 
 <section class="section section--alt" id="profesionales">
@@ -39,7 +44,7 @@ const withAccent = professionals.map((p, i) => ({ ...p, accent: accents[i % acce
     <div class="team-area" style={`--area: ${area.accent}`}>
     <h3 class="team-area__title" data-reveal>{area.title}</h3>
     <ul class="team-list">
-      {withAccent.filter((p) => p.role === area.role).map((professional) => (
+      {ordered.filter((p) => p.role === area.role).map((professional) => (
         <li class="team-member" style={`--accent: ${professional.accent}`} data-reveal>
           <div class="team-photo">
             <img
@@ -72,11 +77,11 @@ const withAccent = professionals.map((p, i) => ({ ...p, accent: accents[i % acce
     ))}
   </div>
 
-  {professionals.map((professional, i) => (
+  {ordered.map((professional) => (
     <InfoDialog
       id={`profesional-${slug(professional.name)}`}
       labelledby={`profesional-${slug(professional.name)}-nombre`}
-      accent={accents[i % accents.length]}
+      accent={professional.accent}
     >
       <div class="bio-header">
         <div class="team-photo team-photo--dialog">
@@ -215,7 +220,8 @@ const withAccent = professionals.map((p, i) => ({ ...p, accent: accents[i % acce
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    margin-top: 0.6rem;
+    /* El relleno vertical cuenta como separación: queda a la misma distancia del rol que el rol del nombre */
+    margin-top: 0.1rem;
     padding: 0.2rem 0.1rem;
     border: none;
     background: none;
