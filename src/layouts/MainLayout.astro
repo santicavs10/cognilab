@@ -3,7 +3,8 @@ import '../styles/global.css';
 import { siteConfig } from '../data/site';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const siteUrl = 'https://cognilab.com.ar';
+// Dirección principal del sitio: la de `site` en astro.config.mjs (www; cognilab.com.ar redirige ahí)
+const siteUrl = (Astro.site?.href ?? 'https://www.cognilab.com.ar/').replace(/\/$/, '');
 
 interface Props {
   title?: string;
@@ -16,7 +17,7 @@ const {
   title = `${siteConfig.name} | ${siteConfig.tagline}`,
   description = siteConfig.description,
   hideWhatsapp = false,
-  ogImage = `${siteUrl}/logos/og-image.svg`
+  ogImage = `${siteUrl}/logos/og-image.png`
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
@@ -29,16 +30,11 @@ const schemaOrg = {
   "url": siteUrl,
   "telephone": siteConfig.phone,
   "email": siteConfig.email,
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": siteConfig.address,
-    "addressCountry": "AR"
-  },
+  // Sin dirección ni nivel de precios, a pedido de CogniLab (no figurar en Google Maps)
   "openingHours": "Mo-Fr 09:00-19:00",
   "medicalSpecialty": ["Psicología", "Psicopedagogía"],
   "image": ogImage,
-  "sameAs": [siteConfig.instagram],
-  "priceRange": "$$"
+  "sameAs": [siteConfig.instagram]
 };
 ---
 
