@@ -112,7 +112,8 @@ export const services = [
 // role es opcional: si está vacío, no se muestra. Define el área donde aparece.
 // position (opcional): cargo en el centro, se muestra arriba del rol.
 // bio (opcional): formación y experiencia, un ítem por renglón, para la ventana "Conocé más".
-//   Fuente: ../info_manual/Descripciones conoce mas.xlsx (fuera del repo). Sin bio se muestra un aviso provisorio.
+//   Fuente: ../info_manual/TEXTOS PAGINA WEB- CVS.docx, 3.ª columna de la tabla (fuera del repo).
+//   Criterio: sin punto final en cada ítem. Sin bio se muestra un aviso provisorio.
 export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',
@@ -120,7 +121,7 @@ export const professionals = [
     position: 'Directora de CogniLab',
     image: '/images/equipo-rocio-do-pazo.jpg',
     bio: [
-      'Lic. y Prof. en Psicopedagogía – UCA',
+      'Lic. y Prof. en Psicopedagogía – Universidad Católica Argentina (UCA)',
       'Maestría en Neuropsicología Aplicada – Universidad Hospital Italiano de Buenos Aires',
       'Posgrado en Neuropsicología del Aprendizaje Infanto-Juvenil – Universidad Favaloro',
       'Profesorado de Nivel Medio y Superior – UCA',
@@ -135,14 +136,14 @@ export const professionals = [
     image: '/images/equipo-florencia-morales-ponce.jpg',
     bio: [
       'Lic. en Psicología – Universidad del Salvador',
+      'Formación en Aplicación de Técnicas Cognitivas y Conductuales – CETECIC',
+      'Formación anual en Terapia Dialéctico-Conductual (DBT) y Habilidades – Habilidades para el Cambio',
       'Tramo de Formación Pedagógica – Universidad FASTA',
       'Formación en Trastornos del Espectro Autista (TEA) – ETCI',
       'Formación en Abordaje Psicopedagógico de los Trastornos del Neurodesarrollo – FLENI',
-      'Formación en Aplicación de Técnicas Cognitivas y Conductuales – CETECIC',
-      'Formación anual en Terapia Dialéctico-Conductual (DBT) y Habilidades – Habilidades para el Cambio',
-      'Experiencia como psicóloga clínica en consultorio particular, con atención de niños, adolescentes y adultos y orientación a familias',
-      'Experiencia en integración escolar en el Centro Andalican, acompañando a niños con discapacidad y coordinando talleres grupales de habilidades sociales',
-      'Experiencia en el Centro Educativo Terapéutico Red Layla, trabajando con jóvenes con discapacidad en el desarrollo de la autonomía, las habilidades sociales, las actividades de la vida diaria y la regulación conductual'
+      'Experiencia como psicóloga clínica con atención de niños, adolescentes y adultos y orientación a familias',
+      'Experiencia en integración escolar acompañando a niños con discapacidad y coordinando talleres grupales de habilidades sociales',
+      'Experiencia trabajando con jóvenes con discapacidad en el desarrollo de la autonomía, las habilidades sociales, las actividades de la vida diaria y la regulación conductual'
     ]
   },
   {
@@ -150,7 +151,7 @@ export const professionals = [
     role: 'Psicopedagoga',
     image: '/images/equipo-aldana-almiron.jpg',
     bio: [
-      'Lic. en Psicopedagogía – UCA',
+      'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
       'Especialización en Neurociencias Cognitivas, Neuropsicología y Rehabilitación Cognitiva',
       'Diplomatura en Comunicación y Lenguaje en Trastornos del Neurodesarrollo',
       'Integrante de la Unidad de Psicopedagogía del Hospital de Rehabilitación Manuel Rocca',
@@ -162,7 +163,14 @@ export const professionals = [
   {
     name: 'Lic. Agustina Ceresetto',
     role: 'Psicopedagoga',
-    image: '/images/equipo-agustina-ceresetto.jpg'
+    image: '/images/equipo-agustina-ceresetto.jpg',
+    bio: [
+      'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
+      'Profesorado de Nivel Superior – UCA',
+      'Curso de Neuroeducación y Educación Emocional – Asociación Psi',
+      'Experiencia en atención clínica psicopedagógica y tutorías académicas',
+      'Experiencia en procesos de inclusión, tutorías y acompañamiento escolar en instituciones educativas'
+    ]
   },
   {
     name: 'Lic. María José Carnelli',
@@ -186,13 +194,27 @@ export const professionals = [
       'Maestría en Neuropsicología Aplicada – Hospital Italiano de Buenos Aires',
       'Experiencia en procesos de acompañamiento e inclusión escolar en distintas instituciones',
       'Experiencia como tutora de estudiantes con dificultades de aprendizaje',
-      'Experiencia en atención clínica psicopedagógica'
+      'Experiencia en atención clínica psicopedagógica',
+      'Miembro de Equipo de Orientación Escolar de nivel primario en institución educativa'
     ]
   },
   {
     name: 'Lic. Adriana Acosta',
     role: 'Psicóloga',
-    image: '/images/equipo-adriana-acosta.jpg'
+    image: '/images/equipo-adriana-acosta.jpg',
+    bio: [
+      'Lic. en Psicología – Universidad de Buenos Aires (UBA)',
+      'Especialización en Terapias Contextuales y de Tercera Generación – ETCI',
+      'Especialización en Terapia de Aceptación y Compromiso (ACT) con niños, adolescentes y padres – ETCI',
+      'Formación en DBT Escuelas – Fundación Foro',
+      'Diplomatura para Educadores en Salud Mental – CISMA',
+      'Formación en Neurociencias y Mindfulness – Antropotécnica',
+      'Formación en Clínica Infantojuvenil: una perspectiva cognitivo-conductual – Hospital Infantojuvenil Dra. Carolina Tobar García',
+      'Experiencia en psicología clínica, con atención de niños y adolescentes',
+      'Experiencia en coordinación de Equipos de Orientación Escolar',
+      'Experiencia en educación especial, docencia y acompañamiento escolar, con implementación de propuestas pedagógicas individualizadas, adaptaciones curriculares y estrategias de inclusión',
+      'Experiencia en diseño y coordinación de talleres para familias y docentes, orientados al bienestar, la convivencia y el desarrollo de habilidades socioemocionales'
+    ]
   },
   {
     name: 'Lic. Alma Brea Lucchelli',
