@@ -94,13 +94,12 @@ const rich = (text: string) =>
     color: var(--color-text);
   }
 
-  /* Justificado con corte de palabras en sílabas (español, por lang="es") para que no queden huecos;
+  /* Justificado sin guiones (los guiones de corte de palabra se descartaron por estética);
      text-wrap: pretty evita una palabra sola en el último renglón */
   .hero-description p {
     margin: 0;
     text-align: justify;
-    hyphens: auto;
-    -webkit-hyphens: auto;
+    hyphens: manual;
     text-wrap: pretty;
   }
 

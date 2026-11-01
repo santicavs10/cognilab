@@ -24,8 +24,7 @@ export const about = [
     imageHeight: 1333,
     alt: 'Escritorio de trabajo de CogniLab con materiales de evaluación, juegos didácticos y un cuaderno con el logo',
     paragraphs: [
-      // ­ = guion opcional: "inter-disciplinaria" se corta solo si hace falta, para no estirar el renglón
-      'En CogniLab trabajamos desde una **mirada integral e inter­disciplinaria**, acompañando a **niños, adolescentes y sus familias** en desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional.',
+      'En CogniLab trabajamos desde una **mirada integral e interdisciplinaria**, acompañando a **niños, adolescentes y sus familias** en desafíos vinculados al aprendizaje, el desarrollo y el bienestar emocional.',
       'También acompañamos a **adultos jóvenes** en los desafíos propios de la vida universitaria y la inserción en el mundo laboral, brindando herramientas que favorezcan la autonomía, la organización y el desarrollo de sus habilidades personales y académicas.'
     ]
   },
