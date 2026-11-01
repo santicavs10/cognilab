@@ -114,6 +114,7 @@ export const services = [
 // bio (opcional): formación y experiencia, un ítem por renglón, para la ventana "Conocé más".
 //   Fuente: ../info_manual/TEXTOS PAGINA WEB- CVS.docx, 3.ª columna de la tabla (fuera del repo).
 //   Criterio: sin punto final en cada ítem. Sin bio se muestra un aviso provisorio.
+//   Ajustes pedidos sobre el Word: Agustina y Florencia figuran como "Lic. y Prof.".
 export const professionals = [
   {
     name: 'Lic. Rocío Do Pazo',
@@ -135,7 +136,7 @@ export const professionals = [
     role: 'Psicóloga',
     image: '/images/equipo-florencia-morales-ponce.jpg',
     bio: [
-      'Lic. en Psicología – Universidad del Salvador',
+      'Lic. y Prof. en Psicología – Universidad del Salvador',
       'Formación en Aplicación de Técnicas Cognitivas y Conductuales – CETECIC',
       'Formación anual en Terapia Dialéctico-Conductual (DBT) y Habilidades – Habilidades para el Cambio',
       'Tramo de Formación Pedagógica – Universidad FASTA',
@@ -165,7 +166,7 @@ export const professionals = [
     role: 'Psicopedagoga',
     image: '/images/equipo-agustina-ceresetto.jpg',
     bio: [
-      'Lic. en Psicopedagogía – Universidad Católica Argentina (UCA)',
+      'Lic. y Prof. en Psicopedagogía – Universidad Católica Argentina (UCA)',
       'Profesorado de Nivel Superior – UCA',
       'Curso de Neuroeducación y Educación Emocional – Asociación Psi',
       'Experiencia en atención clínica psicopedagógica y tutorías académicas',
