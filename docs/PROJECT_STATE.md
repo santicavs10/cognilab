@@ -5,12 +5,12 @@ _Actualizado: 01/11/2026_
 ## Objetivo
 
 Sitio institucional de CogniLab: claro, confiable, accesible y atractivo.
-`main` muestra "Sitio en construcción" hasta que el sitio completo esté listo.
+Sitio publicado en https://www.cognilab.com.ar desde el 01/11/2026. Los cambios se hacen en `develop` (vista previa) y se publican pasando `develop` a `main`.
 
 ## Estado actual
 
-- **Producción (`main`):** página "Sitio en construcción". `/servicios/` también es accesible públicamente.
-- **`develop`:** sitio completo en desarrollo, con la home completa, el carrusel de "Nuestro espacio" (15 fotos), la imagen de "Nuestro enfoque" y las páginas de servicios y equipo.
+- **Producción (`main`):** sitio completo (inicio, servicios y equipo), publicado el 01/11/2026.
+- **`develop`:** igual a `main`; ahí se hacen los cambios y se revisan en la vista previa antes de publicarlos.
 - **Infraestructura:** migrada a cuentas propias (GitHub, Vercel, Cloudflare). Ver [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Pendientes
@@ -21,7 +21,6 @@ Sitio institucional de CogniLab: claro, confiable, accesible y atractivo.
 | Media | **Plan de Vercel** | El plan Hobby es para uso no comercial. Decidir si se pasa a Pro. |
 | Baja | **Foto 13 de la galería** | Su original es chica (889 px); recortada a 3:2 se ve borrosa. Reemplazar cuando haya un archivo de mayor resolución. |
 | Baja | **`public/logos/og-image.svg` sin uso** | Reemplazada por `og-image.png` (las redes no muestran SVG). Se puede borrar. |
-| Media | **Página `/servicios/` en producción** | Está publicada aunque la home diga "en construcción". Decidir si se oculta. |
 | Baja | **Limpieza en cuentas del desarrollador anterior** | Que borre `cognilab.com.ar` de su cuenta de Vercel y su proyecto viejo. |
 | Baja | **Imágenes de plantilla sin uso** | `public/images/espacio-1..3.jpg`, `hero-espacio.jpg` y `profesional-1..3.jpg`. |
 | Baja | **Titularidad del dominio** | Está a nombre de una persona física. Evaluar si conviene pasarlo a CogniLab. |
@@ -29,4 +28,4 @@ Sitio institucional de CogniLab: claro, confiable, accesible y atractivo.
 
 ## Siguiente paso
 
-Publicar: cuando el usuario dé el visto bueno final a la vista previa, pasar `develop` a `main` (avance directo, sin conflictos) y verificar www, la redirección sin www y un envío del formulario desde el sitio real. Decisión de CogniLab: no figurar en Google Maps (por eso los datos para Google no incluyen la dirección).
+Que CogniLab envíe una consulta de prueba desde el sitio publicado y confirme que llega a equipo.cognilab@gmail.com. Decisión vigente: no figurar en Google Maps (los datos para Google no incluyen la dirección).
