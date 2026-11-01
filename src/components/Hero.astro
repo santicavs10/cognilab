@@ -1,14 +1,7 @@
 ---
 import { about } from '../data/site';
+import { rich } from '../utils/rich';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-// **texto** -> <strong>texto</strong> (se escapa el HTML antes)
-const rich = (text: string) =>
-  text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 ---
 
 <section id="inicio" class="hero section">

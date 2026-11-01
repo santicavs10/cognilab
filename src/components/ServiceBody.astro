@@ -1,0 +1,281 @@
+---
+// Contenido ampliado de un servicio: se usa en la ventana "+ info" (Offers) y en /servicios.
+// Las partes (parts) son textos desplegables que empiezan cerrados y se abren con el "+".
+import type { Service, ServiceBlock } from '../data/site';
+import { rich } from '../utils/rich';
+
+interface Props {
+  service: Service;
+}
+const { service } = Astro.props;
+
+const parts = service.parts ?? [];
+const mainParts = parts.filter((p) => !p.specific);
+const specificParts = parts.filter((p) => p.specific);
+const isHeading = (b: ServiceBlock): b is { h: string } => typeof b === 'object' && 'h' in b;
+const isList = (b: ServiceBlock): b is { list: string[] } => typeof b === 'object' && 'list' in b;
+const isSteps = (b: ServiceBlock): b is { steps: string[] } => typeof b === 'object' && 'steps' in b;
+---
+
+{/* Bloques: párrafo, subtítulo, viñetas o pasos numerados. Dentro de las partes, el subtítulo baja a h4. */}
+<div class="service-body">
+  {service.body.map((b) =>
+    typeof b === 'string' ? <p set:html={rich(b)} />
+    : isHeading(b) ? <h3 class="service-body__heading">{b.h}</h3>
+    : isList(b) ? <ul class="service-body__list">{b.list.map((item) => <li set:html={rich(item)} />)}</ul>
+    : isSteps(b) ? <ol class="service-body__steps">{b.steps.map((item) => <li set:html={rich(item)} />)}</ol>
+    : null
+  )}
+</div>
+
+{[{ list: mainParts, specific: false }, { list: specificParts, specific: true }].filter((g) => g.list.length).map((group) => (
+  <div class:list={['service-parts', { 'service-parts--specific': group.specific }]}>
+    {group.specific && (
+      <div class="service-parts__intro">
+        <h3 class="service-body__heading">Evaluaciones específicas</h3>
+        <p>No forman parte de todas las evaluaciones: se indican según cada caso.</p>
+      </div>
+    )}
+    {group.list.map((part) => (
+      <details class="service-part">
+        <summary>
+          <span>{part.title}</span>
+          <span class="service-part__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="service-body service-part__content">
+          {part.body.map((b) =>
+            typeof b === 'string' ? <p set:html={rich(b)} />
+            : isHeading(b) ? <h4 class="service-body__heading">{b.h}</h4>
+            : isList(b) ? <ul class="service-body__list">{b.list.map((item) => <li set:html={rich(item)} />)}</ul>
+            : isSteps(b) ? <ol class="service-body__steps">{b.steps.map((item) => <li set:html={rich(item)} />)}</ol>
+            : null
+          )}
+        </div>
+      </details>
+    ))}
+  </div>
+))}
+
+<style>
+  .service-body {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .service-body p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .service-body :global(strong) {
+    color: var(--color-text);
+  }
+
+  .service-body__heading {
+    margin: 0.85rem 0 0;
+    font-size: 1.1rem;
+    color: var(--color-text);
+  }
+
+  .service-body__list,
+  .service-body__steps {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 1.1rem 1.35rem;
+    border-radius: var(--radius-md);
+    background: rgba(102, 12, 159, 0.04);
+    list-style: none;
+  }
+
+  .service-body__list li,
+  .service-body__steps li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--color-text);
+    line-height: 1.55;
+  }
+
+  /* Viñetas del color del servicio */
+  .service-body__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* Pasos numerados en círculos del color del servicio */
+  .service-body__steps {
+    counter-reset: paso;
+  }
+
+  .service-body__steps li {
+    padding-left: 2.1rem;
+    counter-increment: paso;
+  }
+
+  .service-body__steps li::before {
+    content: counter(paso);
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    display: grid;
+    place-items: center;
+    width: 1.45rem;
+    height: 1.45rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  /* ─── Partes desplegables ─── */
+  .service-parts {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .service-parts--specific {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .service-parts__intro p {
+    margin: 0.3rem 0 0.25rem;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+
+  .service-parts__intro .service-body__heading {
+    margin: 0;
+  }
+
+  .service-part {
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    overflow: hidden;
+    /* Permite animar la apertura (height: auto) donde el navegador lo soporte */
+    interpolate-size: allow-keywords;
+  }
+
+  .service-part summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 1.15rem;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease;
+  }
+
+  .service-part summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .service-part summary:hover,
+  .service-part[open] summary {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  .service-part summary:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+    border-radius: var(--radius-md);
+  }
+
+  /* "+" que se convierte en "−" al abrir */
+  .service-part__icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .service-part__icon::before,
+  .service-part__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.8rem;
+    height: 2.5px;
+    border-radius: 2px;
+    background: white;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease;
+  }
+
+  .service-part__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .service-part[open] .service-part__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .service-part__content {
+    padding: 0.25rem 1.15rem 1.15rem;
+  }
+
+  .service-part__content .service-body__heading {
+    font-size: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  /* Apertura suave (navegadores que soportan ::details-content; el resto abre sin animación) */
+  .service-part::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.3s ease, content-visibility 0.3s allow-discrete;
+  }
+
+  .service-part[open]::details-content {
+    block-size: auto;
+  }
+
+  @media (max-width: 600px) {
+    .service-body__list,
+    .service-body__steps {
+      padding: 1rem 1.1rem;
+    }
+
+    .service-part summary {
+      padding: 0.85rem 1rem;
+    }
+
+    .service-part__content {
+      padding: 0.25rem 1rem 1rem;
+    }
+
+    /* Dentro de una parte, la lista ocupa todo el ancho disponible */
+    .service-part__content .service-body__list,
+    .service-part__content .service-body__steps {
+      padding: 0.85rem 0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-part::details-content,
+    .service-part__icon::before,
+    .service-part__icon::after {
+      transition: none;
+    }
+  }
+</style>

@@ -2,6 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ServiceBody from '../components/ServiceBody.astro';
 import { services, siteConfig } from '../data/site';
 
 const accentColors = [
@@ -32,19 +33,7 @@ const accentColors = [
             </div>
 
             <div class="service-item-body">
-              <div class="service-text">
-                <p class="service-lead">{service.description}</p>
-                <p>{service.details}</p>
-              </div>
-
-              <div class="service-for-whom">
-                <p class="for-whom-label">¿Para quién?</p>
-                <ul>
-                  {service.forWhom.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </div>
+              <ServiceBody service={service} />
             </div>
           </article>
         ))}
@@ -105,66 +94,12 @@ const accentColors = [
     margin: 0;
   }
 
+  /* Texto a un ancho de lectura cómodo */
   .service-item-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
-
-  .service-lead {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 0.75rem;
-  }
-
-  .service-for-whom {
-    background: rgba(86, 47, 115, 0.04);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-  }
-
-  .for-whom-label {
-    font-family: var(--font-accent);
-    font-size: 0.9rem;
-    color: var(--color-primary);
-    letter-spacing: 0.04em;
-    margin: 0 0 1rem;
-  }
-
-  .service-for-whom ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.6rem;
-  }
-
-  .service-for-whom li {
-    padding-left: 1.4rem;
-    position: relative;
-    color: var(--color-text);
-    line-height: 1.5;
-  }
-
-  .service-for-whom li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: var(--accent);
+    max-width: 46rem;
   }
 
   /* ─── Responsive ─────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .service-item-body {
-      grid-template-columns: 1fr;
-    }
-  }
-
   @media (max-width: 600px) {
     .service-item {
       padding: 1.5rem;

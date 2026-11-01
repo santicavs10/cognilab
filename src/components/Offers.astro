@@ -2,6 +2,7 @@
 import { services } from '../data/site';
 import Eyebrow from './Eyebrow.astro';
 import InfoDialog from './InfoDialog.astro';
+import ServiceBody from './ServiceBody.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Color de cada tarjeta y de su ventana de detalle, en el mismo orden que services
@@ -48,15 +49,7 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
       accent={accents[i % accents.length]}
     >
       <h2 class="service-dialog__title" id={`servicio-${s.slug}-titulo`}>{s.title}</h2>
-      <p class="service-dialog__lead">{s.description}</p>
-      <p class="service-dialog__details">{s.details}</p>
-
-      <div class="service-dialog__for-whom">
-        <p class="service-dialog__label">¿Para quién?</p>
-        <ul>
-          {s.forWhom.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
+      <ServiceBody service={s} />
     </InfoDialog>
   ))}
 </section>
@@ -123,59 +116,6 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
     color: var(--color-text);
   }
 
-  .service-dialog__lead {
-    margin: 0 0 0.75rem;
-    font-weight: 700;
-    color: var(--color-text);
-    line-height: 1.6;
-  }
-
-  .service-dialog__details {
-    margin: 0 0 1.5rem;
-    color: var(--color-muted);
-    line-height: 1.7;
-  }
-
-  .service-dialog__for-whom {
-    background: rgba(102, 12, 159, 0.04);
-    border-radius: var(--radius-md);
-    padding: 1.25rem 1.5rem;
-  }
-
-  .service-dialog__label {
-    margin: 0 0 0.85rem;
-    font-family: var(--font-accent);
-    font-size: 0.95rem;
-    color: var(--color-text);
-    letter-spacing: 0.04em;
-  }
-
-  .service-dialog__for-whom ul {
-    display: grid;
-    gap: 0.6rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .service-dialog__for-whom li {
-    position: relative;
-    padding-left: 1.4rem;
-    color: var(--color-text);
-    line-height: 1.5;
-  }
-
-  .service-dialog__for-whom li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: var(--accent);
-  }
-
   .visually-hidden {
     position: absolute;
     width: 1px;
@@ -196,10 +136,6 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
   @media (max-width: 600px) {
     .offer-grid {
       grid-template-columns: 1fr;
-    }
-
-    .service-dialog__for-whom {
-      padding: 1rem 1.15rem;
     }
   }
 </style>

@@ -62,84 +62,205 @@ export const specialties = [
 export const specialtiesShared =
   'Trabajamos en conjunto con las familias y las escuelas, brindando orientaciones, herramientas y pautas para acompañar cada proceso y dar continuidad a lo trabajado en el consultorio en los distintos espacios de la vida cotidiana.';
 
-export const services = [
+// Contenido ampliado de un servicio (ventana "+ info" y página /servicios).
+// Un texto suelto es un párrafo (admite **negritas**); { h } es un subtítulo;
+// { list } son viñetas y { steps }, pasos numerados.
+export type ServiceBlock = string | { h: string } | { list: string[] } | { steps: string[] };
+
+export interface Service {
+  slug: string;
+  title: string;
+  // Síntesis: se ve en la tarjeta
+  description: string;
+  body: ServiceBlock[];
+  // Partes desplegables (empiezan cerradas). specific: se agrupan aparte, como evaluaciones que no siempre se hacen.
+  parts?: { title: string; specific?: boolean; body: ServiceBlock[] }[];
+}
+
+export const services: Service[] = [
   {
     slug: 'evaluacion',
     title: 'Evaluación',
-    description: 'Evaluaciones psicológicas y psicopedagógicas para conocer el perfil de cada niño o adolescente y orientar el proceso de intervención.',
-    details: 'Realizamos evaluaciones integrales que permiten identificar el perfil cognitivo, emocional y de aprendizaje. Los resultados se comunican en una devolución detallada a la familia y, cuando corresponde, a la institución educativa.',
-    forWhom: [
-      'Niños y adolescentes con dificultades escolares',
-      'Familias que buscan un diagnóstico claro',
-      'Derivaciones de escuelas o profesionales de la salud',
-      'Personas que requieren informes para adecuaciones curriculares'
+    description: 'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo estas se manifiestan en diferentes ámbitos de la vida.',
+    body: [
+      'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo estas se manifiestan en diferentes ámbitos de la vida.',
+      'A través de entrevistas, observaciones clínicas, pruebas estandarizadas y cuestionarios, integramos información para comprender las necesidades de cada persona y orientar posibles intervenciones.'
+    ],
+    parts: [
+      {
+        title: 'Evaluación de niños y adolescentes',
+        body: [
+          { h: '¿Cómo se realiza?' },
+          {
+            steps: [
+              'Entrevista inicial con la familia: conocemos el motivo de consulta, los antecedentes y la historia del desarrollo.',
+              'Encuentros individuales: se realizan aproximadamente 4 a 5 encuentros de 60 minutos con el niño o adolescente.',
+              'Cuestionarios y escalas: se administran instrumentos a la familia y a la escuela para conocer su funcionamiento en distintos contextos.',
+              'Análisis e integración: analizamos los resultados y la información obtenida durante el proceso.',
+              'Entrevista de devolución: compartimos los resultados con la familia y entregamos el informe escrito con conclusiones y orientaciones.'
+            ]
+          }
+        ]
+      },
+      {
+        title: 'Evaluación de adultos',
+        body: [
+          'La evaluación neuropsicológica en adultos busca conocer el funcionamiento cognitivo actual, identificar fortalezas y posibles desafíos y comprender su impacto en la vida cotidiana, académica y laboral.',
+          'La instancia de evaluación suele durar aproximadamente 2 horas e incluye una entrevista y la administración de diferentes técnicas de evaluación.',
+          { h: '¿Cómo se realiza?' },
+          {
+            steps: [
+              'Entrevista inicial breve: para conocer el motivo de consulta y los antecedentes relevantes.',
+              'Administración de pruebas: se realizan diferentes tareas y técnicas para explorar el funcionamiento intelectual.',
+              'Escalas y cuestionarios: permiten ampliar la información sobre el funcionamiento cotidiano y los aspectos relevantes para la consulta.',
+              'Entrevista de devolución: posteriormente, se coordina un encuentro para conversar sobre los resultados y compartir orientaciones.'
+            ]
+          }
+        ]
+      },
+      {
+        title: 'ADOS-2 y ADI-R',
+        specific: true,
+        body: [
+          'En CogniLab también realizamos evaluaciones específicas para la exploración del espectro autista mediante ADOS-2 y ADI-R.',
+          {
+            list: [
+              'ADOS-2: instrumento de evaluación que, mediante actividades semiestructuradas, permite observar aspectos de la comunicación, la interacción social y determinados patrones de comportamiento.',
+              'ADI-R: entrevista semiestructurada a adultos responsables que permite profundizar en la historia del desarrollo y explorar aspectos de la comunicación, la interacción social y los comportamientos e intereses.'
+            ]
+          },
+          'Estas herramientas son complementarias y no forman parte de todas las evaluaciones neuropsicológicas. Su indicación se considera según cada caso y se coordinan por separado.'
+        ]
+      }
     ]
   },
   {
     slug: 'tratamiento-psicologico',
     title: 'Tratamiento psicológico',
-    description: 'Espacio terapéutico individual para niños y adolescentes que atraviesan dificultades emocionales, conductuales o de desarrollo.',
-    details: 'El tratamiento psicológico ofrece un espacio de escucha y acompañamiento donde se trabaja en función de los objetivos terapéuticos de cada consultante. Se trabaja articulando con la familia y otros profesionales cuando es necesario.',
-    forWhom: [
-      'Niños con dificultades emocionales o conductuales',
-      'Adolescentes en procesos de cambio e identidad',
-      'Personas que atraviesan crisis o momentos de malestar',
-      'Quienes buscan un espacio de crecimiento personal'
+    description: 'Espacio terapéutico individual para niños, adolescentes y adultos jóvenes. Acompañamos el desarrollo emocional y personal, trabajando sobre el reconocimiento y la regulación de las emociones, los vínculos y las conductas. Desde una orientación cognitivo-conductual, promovemos el desarrollo de herramientas y estrategias que favorezcan el bienestar y los recursos personales.',
+    body: [
+      'Ofrecemos un espacio terapéutico individual para niños, adolescentes y adultos jóvenes, orientado a acompañar su desarrollo emocional, personal y vincular.',
+      'Trabajamos desde una **orientación cognitivo-conductual**, que considera la relación entre pensamientos, emociones y conductas. Buscamos comprender las necesidades de cada persona y desarrollar herramientas y estrategias que favorezcan su bienestar y desenvolvimiento en la vida cotidiana.',
+      { h: '¿Cuándo puede ser útil consultar?' },
+      'La consulta psicológica puede ser un espacio de acompañamiento cuando aparecen:',
+      {
+        list: [
+          'Cambios en el estado de ánimo o en el comportamiento.',
+          'Dificultades para reconocer y regular las emociones.',
+          'Desafíos en los vínculos y las relaciones interpersonales.',
+          'Ansiedad, preocupaciones frecuentes o dificultades para manejar el estrés.',
+          'Dificultades relacionadas con la autoestima y la confianza en uno mismo.',
+          'Situaciones personales, familiares, escolares o académicas que generan malestar.'
+        ]
+      },
+      { h: '¿Cómo trabajamos?' },
+      'El proceso comienza con entrevistas iniciales para conocer el motivo de consulta, los antecedentes y las necesidades de cada persona. A partir de allí, se establecen objetivos terapéuticos y se planifica un abordaje individualizado.',
+      'En el caso de niños y adolescentes, la participación de las familias es una parte importante del proceso. Se alternan sesiones individuales con el niño o adolescente y espacios de orientación familiar, así como también la articulación con la escuela y otros profesionales intervinientes.',
+      { h: '¿Cuánto dura un tratamiento?' },
+      'La duración y frecuencia de los encuentros se definen de acuerdo con las necesidades y los objetivos de cada proceso. El abordaje se revisa a lo largo del tratamiento, considerando la evolución y los avances de cada persona.'
     ]
   },
   {
     slug: 'tratamiento-psicopedagogico',
     title: 'Tratamiento psicopedagógico',
-    description: 'Intervención individualizada orientada a fortalecer los procesos de aprendizaje y el desarrollo de estrategias cognitivas y académicas.',
-    details: 'El tratamiento psicopedagógico trabaja sobre las dificultades específicas de cada consultante, promoviendo recursos y estrategias que favorezcan su autonomía y rendimiento escolar. Se mantiene contacto permanente con la familia y la escuela.',
-    forWhom: [
-      'Niños con dificultades en lectura, escritura o cálculo',
-      'Estudiantes con diagnóstico de DEA o TDAH',
-      'Adolescentes con bajo rendimiento escolar',
-      'Familias que buscan acompañamiento en el proceso de aprendizaje'
+    description: 'Espacio de intervención individual para niños, adolescentes y adultos jóvenes, orientado a estimular y fortalecer las funciones cognitivas implicadas en el aprendizaje, desarrollar habilidades académicas y promover estrategias que favorezcan una mayor autonomía.',
+    body: [
+      'El tratamiento psicopedagógico es un espacio de intervención individual orientado a acompañar y fortalecer los procesos de aprendizaje.',
+      'A partir del perfil de fortalezas y desafíos identificado en la evaluación, se establecen objetivos de trabajo y se diseñan propuestas específicas para estimular las funciones cognitivas, fortalecer las habilidades académicas y desarrollar estrategias de aprendizaje acordes a las necesidades de cada persona.',
+      { h: '¿Cuándo puede ser útil consultar?' },
+      'La intervención psicopedagógica puede ser beneficiosa cuando se presentan:',
+      {
+        list: [
+          'Dificultades persistentes en la adquisición o consolidación de aprendizajes escolares.',
+          'Dificultades en lectura, escritura, comprensión o matemática.',
+          'Dificultades para sostener la atención, organizarse o planificar las actividades académicas.',
+          'Necesidad de fortalecer estrategias de estudio y autonomía en el aprendizaje.',
+          'Un desempeño académico que no refleja los recursos, conocimientos o esfuerzos de la persona.',
+          'Dificultades de aprendizaje asociadas a condiciones del neurodesarrollo.'
+        ]
+      },
+      { h: '¿Cómo trabajamos?' },
+      'El tratamiento parte de los resultados de la evaluación neuropsicológica y de los objetivos acordados para cada paciente. Las sesiones son individuales y se planifican en función de su perfil de aprendizaje, utilizando actividades, recursos y estrategias específicas.',
+      'En el caso de niños y adolescentes, se incorporan espacios de orientación a las familias y articulación con la escuela y otros profesionales intervinientes.',
+      { h: '¿Cuánto dura un tratamiento?' },
+      'La frecuencia y duración del tratamiento se establecen de acuerdo con las necesidades de cada paciente y los objetivos propuestos. A lo largo del proceso se revisan los avances y se ajustan las intervenciones cuando resulta necesario.'
     ]
   },
   {
     slug: 'orientacion-padres',
     title: 'Orientación a padres',
-    description: 'Espacio de orientación y acompañamiento a familias para comprender mejor el desarrollo de sus hijos y fortalecer los vínculos.',
-    details: 'Brindamos un espacio de escucha y orientación a padres y cuidadores, ofreciendo herramientas concretas para acompañar el desarrollo emocional y el aprendizaje de sus hijos desde el hogar.',
-    forWhom: [
-      'Familias con hijos en etapas de cambio o transición',
-      'Padres que buscan herramientas de crianza',
-      'Familias con hijos en tratamiento que desean mayor acompañamiento',
-      'Cuidadores que necesitan un espacio de contención y orientación'
+    description: 'Espacio de asesoramiento y acompañamiento para familias, orientado a comprender las necesidades de sus hijos, abordar inquietudes vinculadas con su desarrollo y aprendizaje y construir estrategias para acompañarlos en la vida cotidiana.',
+    body: [
+      'Ofrecemos espacios de orientación y acompañamiento a familias que buscan comprender mejor las necesidades de sus hijos y encontrar herramientas para acompañar su desarrollo.',
+      'A través del intercambio y la reflexión conjunta, trabajamos sobre situaciones concretas de la vida familiar, considerando las características de cada niño o adolescente y su contexto.',
+      { h: '¿Cuándo puede ser útil consultar?' },
+      'La orientación familiar puede ser un recurso valioso cuando surgen inquietudes relacionadas con:',
+      {
+        list: [
+          '**Desarrollo y comportamiento:** comprender determinadas conductas y encontrar maneras de acompañarlas.',
+          '**Regulación emocional:** acompañar a los hijos en el reconocimiento y manejo de sus emociones.',
+          '**Límites y crianza:** construir acuerdos y estrategias para establecer límites de manera consistente.',
+          '**Rutinas y autonomía:** favorecer la adquisición de hábitos, responsabilidades e independencia.',
+          '**Aprendizaje y escolaridad:** comprender las dificultades de aprendizaje y acompañar las demandas escolares.',
+          '**Vínculos y comunicación:** fortalecer la comunicación familiar y abordar situaciones de conflicto.'
+        ]
+      },
+      { h: '¿Cómo trabajamos?' },
+      'Los encuentros se realizan con los adultos responsables y parten de sus inquietudes y necesidades. A partir de cada situación, establecemos objetivos específicos, ofrecemos orientación, aportamos herramientas y construimos estrategias concretas que puedan implementarse en el entorno familiar.',
+      'Cuando resulta necesario, también podemos articular con los profesionales que acompañan al niño o adolescente y con la institución educativa.'
     ]
   },
   {
     slug: 'tutorias-academicas',
     title: 'Tutorías académicas',
-    description: 'Acompañamiento escolar personalizado para reforzar contenidos, organizar el estudio y desarrollar hábitos de aprendizaje efectivos.',
-    details: 'Las tutorías académicas acompañan a niños y adolescentes en su trayectoria escolar, trabajando contenidos específicos y estrategias de organización del estudio, en coordinación con el tratamiento psicopedagógico cuando corresponde.',
-    forWhom: [
-      'Niños y adolescentes con dificultades en materias específicas',
-      'Estudiantes que necesitan organizar sus hábitos de estudio',
-      'Alumnos en etapas de exámenes o transiciones escolares',
-      'Familias que buscan un apoyo escolar personalizado'
+    description: 'Espacios individuales a cargo de psicopedagogas, orientados a desarrollar estrategias de estudio, planificación y organización. Buscamos que cada estudiante conozca su perfil de aprendizaje y adquiera herramientas para estudiar con mayor autonomía.',
+    body: [
+      'Las tutorías académicas son espacios individuales coordinados por psicopedagogas, orientados a enseñar y desarrollar estrategias para estudiar y aprender con mayor autonomía.',
+      'No se trata solamente de reforzar contenidos escolares o resolver tareas, sino de acompañar a cada estudiante a conocer su propio perfil de aprendizaje, identificar qué estrategias le resultan útiles e incorporar herramientas que pueda utilizar progresivamente de manera independiente.',
+      { h: '¿A quiénes están dirigidas?' },
+      {
+        list: [
+          '**Últimos años de primaria:** para comenzar a desarrollar hábitos de estudio, organización y planificación, y adquirir herramientas que faciliten el pasaje a la escuela secundaria.',
+          '**Estudiantes de secundaria:** para acompañar las demandas académicas, organizar materias y materiales, gestionar tiempos, planificar el estudio y preparar evaluaciones.',
+          '**Estudiantes universitarios:** para desarrollar estrategias que permitan organizar el estudio, abordar textos y materiales complejos, planificar períodos de preparación y responder a las distintas exigencias académicas.'
+        ]
+      },
+      { h: '¿Cómo trabajamos?' },
+      'Partimos de conocer el perfil de aprendizaje de cada estudiante, sus necesidades y las demandas de su trayectoria académica. A partir de allí, enseñamos y ponemos en práctica estrategias concretas que se incorporan progresivamente.',
+      'Trabajamos sobre:',
+      {
+        list: [
+          '**Organización y planificación:** uso de agenda, registro de fechas y tareas, organización de carpetas y materiales, gestión del tiempo.',
+          '**Comprensión y procesamiento de la información:** identificación de ideas principales, comprensión de textos, toma de apuntes y elaboración de resúmenes, esquemas y cuadros.',
+          '**Estrategias de estudio:** selección de herramientas según los contenidos y el tipo de evaluación; preparación de exámenes orales, escritos y prácticos.',
+          '**Monitoreo del aprendizaje:** reconocimiento de qué contenidos se comprenden, cuáles necesitan mayor trabajo y cómo evaluar los propios conocimientos.',
+          '**Autonomía:** incorporación progresiva de estrategias para organizarse, estudiar y resolver las demandas académicas de manera cada vez más independiente.'
+        ]
+      },
+      'También incorporamos herramientas y recursos digitales cuando resultan útiles para facilitar la comprensión, organizar la información y favorecer el aprendizaje.',
+      'El objetivo es que cada estudiante no solo pueda responder a las demandas académicas actuales, sino que también construya recursos y estrategias que pueda generalizar a nuevos aprendizajes.'
     ]
   },
   {
     slug: 'capacitaciones',
     title: 'Capacitaciones a escuelas',
-    description: 'Formación y asesoramiento a equipos docentes sobre dificultades de aprendizaje, diversidad educativa e intervención temprana.',
-    details: 'Ofrecemos capacitaciones y talleres dirigidos a docentes y equipos de orientación escolar, brindando herramientas para identificar, comprender y acompañar a alumnos con diversas necesidades de aprendizaje dentro del aula.',
-    forWhom: [
-      'Docentes de nivel inicial, primario y secundario',
-      'Equipos de orientación escolar',
-      'Instituciones educativas que buscan formación en NEE',
-      'Directivos que desean capacitar a su plantel'
+    description: 'Propuestas de formación y asesoramiento para instituciones educativas, orientadas a profundizar conocimientos sobre aprendizaje y neurodesarrollo y brindar herramientas prácticas para el trabajo en el aula.',
+    body: [
+      'En CogniLab diseñamos propuestas de capacitación y asesoramiento para instituciones educativas, destinadas a docentes, equipos de orientación escolar y otros profesionales de la comunidad educativa.',
+      'Nuestro objetivo es acercar conocimientos e información actualizada sobre temáticas relacionadas al aprendizaje, el neurodesarrollo y el funcionamiento cognitivo. Así como brindar herramientas y estrategias que puedan aplicarse en la práctica educativa cotidiana.',
+      { h: '¿Qué propuestas ofrecemos?' },
+      'Abordamos temáticas vinculadas con el desarrollo, el aprendizaje y las necesidades de los estudiantes, ofreciendo herramientas para comprender diferentes perfiles y pensar estrategias de acompañamiento en el ámbito escolar.',
+      'Los contenidos se definen de acuerdo con las inquietudes, necesidades y objetivos de cada institución.',
+      { h: '¿Cómo trabajamos?' },
+      'Las propuestas pueden desarrollarse mediante encuentros de capacitación, talleres temáticos o espacios de intercambio y asesoramiento con los equipos educativos.',
+      'Buscamos articular los fundamentos teóricos con situaciones concretas de la práctica escolar, ofreciendo recursos que puedan trasladarse al trabajo cotidiano en el aula.'
     ]
   }
 ];
 
 // name: sin "Lic."; el título va aparte, en title, y se muestra debajo del nombre.
 // role: define el área donde aparece (Psicopedagoga / Psicóloga); no se muestra.
-// position (opcional): cargo en el centro; quien lo tiene se muestra arriba de las áreas.
+// position (opcional): cargo en el centro; es el subtítulo de su propio grupo, arriba de las áreas (no se repite en la tarjeta).
 // bio (opcional): formación y experiencia, un ítem por renglón, para la ventana "Conocé más".
 //   Fuente: ../info_manual/TEXTOS PAGINA WEB- CVS.docx, 3.ª columna de la tabla (fuera del repo).
 //   Al mostrarse, cada ítem termina en punto. Sin bio se muestra un aviso provisorio.
@@ -149,7 +270,7 @@ export const professionals = [
     name: 'Rocío Do Pazo',
     role: 'Psicopedagoga',
     title: 'Lic. y Prof. en Psicopedagogía',
-    position: 'Directora de CogniLab',
+    position: 'Directora',
     image: '/images/equipo-rocio-do-pazo.jpg',
     bio: [
       'Lic. y Prof. en Psicopedagogía – Universidad Católica Argentina (UCA)',

@@ -34,9 +34,14 @@ const accents = [
   'var(--color-pink)'
 ];
 
-// Grupos en orden: primero quien tiene un cargo (dirección), sin subtítulo; después cada área
+// Grupos en orden: primero cada cargo (por ejemplo, "Directora"), con su propio color; después cada área
+const positions = [...new Set(professionals.map(positionOf).filter(Boolean))];
 const groups = [
-  { title: '', accent: '', members: professionals.filter((p) => positionOf(p)) },
+  ...positions.map((position) => ({
+    title: position,
+    accent: 'var(--color-purple)',
+    members: professionals.filter((p) => positionOf(p) === position)
+  })),
   ...areas.map((area) => ({
     ...area,
     members: professionals.filter((p) => p.role === area.role && !positionOf(p))
@@ -73,7 +78,6 @@ const accentOf = (p: Professional) => ordered.find((o) => o.name === p.name)?.ac
 
           <div class="team-info">
             <h4>{professional.name}</h4>
-            {positionOf(professional) && <p class="position">{positionOf(professional)}</p>}
             {titleOf(professional) && <p class="role">{titleOf(professional)}</p>}
             <button
               class="team-more"
@@ -104,7 +108,6 @@ const accentOf = (p: Professional) => ordered.find((o) => o.name === p.name)?.ac
         </div>
         <div>
           <h2 class="bio-name" id={`profesional-${slug(professional.name)}-nombre`}>{professional.name}</h2>
-          {positionOf(professional) && <p class="bio-role position">{positionOf(professional)}</p>}
           {titleOf(professional) && <p class="bio-role">{titleOf(professional)}</p>}
         </div>
       </div>
@@ -228,14 +231,6 @@ const accentOf = (p: Professional) => ordered.find((o) => o.name === p.name)?.ac
   .role {
     margin: 0.3rem 0 0;
     font-size: 1.05rem;
-    color: var(--color-text);
-  }
-
-  /* Cargo (por ejemplo, dirección): va antes del rol, con la misma separación y algo más destacado */
-  .position {
-    margin: 0.3rem 0 0;
-    font-size: 1rem;
-    font-weight: 600;
     color: var(--color-text);
   }
 
