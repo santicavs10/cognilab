@@ -6,6 +6,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Sin barra final: las páginas se publican como /servicios/ y el menú compara con /servicios
 const currentPath = Astro.url.pathname.replace(base, '').replace(/\/+$/, '') || '/';
 
+// Activo en su página y en sus subpáginas (por ejemplo, Servicios en /servicios/tutorias-academicas)
+const isActive = (activePath?: string) =>
+  !!activePath && (currentPath === activePath || (activePath !== '/' && currentPath.startsWith(`${activePath}/`)));
+
 const navItems = [
   { href: `${base}/#inicio`,        label: 'Inicio',         activePath: '/' },
   { href: `${base}/servicios`,      label: 'Servicios',      activePath: '/servicios' },
@@ -28,7 +32,7 @@ const navItems = [
               href={item.href}
               class:list={[{
                 'nav-cta': item.cta,
-                'is-active': !!item.activePath && currentPath === item.activePath
+                'is-active': isActive(item.activePath)
               }]}
               aria-current={item.activePath && currentPath === item.activePath ? 'page' : undefined}
             >
@@ -59,7 +63,7 @@ const navItems = [
           <li>
             <a
               href={item.href}
-              class:list={[{ 'is-active': !!item.activePath && currentPath === item.activePath }]}
+              class:list={[{ 'is-active': isActive(item.activePath) }]}
               aria-current={item.activePath && currentPath === item.activePath ? 'page' : undefined}
             >
               <span class="nav-label">{item.label}</span>

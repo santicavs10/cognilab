@@ -3,19 +3,11 @@ import { services } from '../data/site';
 import Eyebrow from './Eyebrow.astro';
 import InfoDialog from './InfoDialog.astro';
 import ServiceBody from './ServiceBody.astro';
+import { serviceAccent } from '../utils/serviceAccent';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// Color de cada tarjeta y de su ventana de detalle, en el mismo orden que services
-const accents = [
-  'var(--color-primary)',
-  'var(--color-secondary-strong)',
-  'var(--color-purple)',
-  'var(--color-pink)',
-  'var(--color-orange)',
-  'var(--color-secondary)'
-];
-const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
-// Sin JavaScript, "+ info" lleva a la página de servicios
+const accentFor = (i: number) => `--accent: ${serviceAccent(i)}`;
+// Sin JavaScript, "+ info" lleva a la página propia del servicio
 ---
 
 <section class="section">
@@ -30,7 +22,7 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
           <h3>{s.title}</h3>
           <p>{s.description}</p>
           <a
-            href={`${base}/servicios#${s.slug}`}
+            href={`${base}/servicios/${s.slug}`}
             class="btn-info"
             data-dialog-open={`servicio-${s.slug}`}
             aria-haspopup="dialog"
@@ -46,7 +38,7 @@ const accentFor = (i: number) => `--accent: ${accents[i % accents.length]}`;
     <InfoDialog
       id={`servicio-${s.slug}`}
       labelledby={`servicio-${s.slug}-titulo`}
-      accent={accents[i % accents.length]}
+      accent={serviceAccent(i)}
     >
       <h2 class="service-dialog__title" id={`servicio-${s.slug}-titulo`}>{s.title}</h2>
       <ServiceBody service={s} />

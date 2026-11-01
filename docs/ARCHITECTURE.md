@@ -12,7 +12,7 @@
 src/
   data/site.ts        fuente única de textos, datos y listas (servicios, equipo, galería, FAQ)
   components/         secciones de la home (Hero, Gallery, Contact, ...)
-  pages/              index, servicios, equipo; _index_full.astro = home completa sin publicar
+  pages/              index, servicios, equipo y servicios/[slug] (una página por servicio, para Google)
   layouts/            MainLayout
   styles/global.css   variables de diseño (colores, fuentes, radios, sombras)
 public/               archivos servidos tal cual (logos, imágenes)

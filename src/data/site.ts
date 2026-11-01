@@ -70,8 +70,10 @@ export type ServiceBlock = string | { h: string } | { list: string[] } | { steps
 export interface Service {
   slug: string;
   title: string;
-  // Síntesis: se ve en la tarjeta
+  // Síntesis: se ve en la tarjeta y es la descripción para Google de su página
   description: string;
+  // Título para Google de su página (/servicios/<slug>/); por defecto, "<title> en Belgrano, CABA"
+  seoTitle?: string;
   body: ServiceBlock[];
   // Partes desplegables (empiezan cerradas). specific: se agrupan aparte, como evaluaciones que no siempre se hacen.
   parts?: { title: string; specific?: boolean; body: ServiceBlock[] }[];
@@ -79,7 +81,7 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    slug: 'evaluacion',
+    slug: 'evaluacion-neuropsicologica',
     title: 'Evaluación neuropsicológica',
     description: 'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo estas se manifiestan en diferentes ámbitos de la vida.',
     body: [
@@ -244,6 +246,7 @@ export const services: Service[] = [
   {
     slug: 'capacitaciones',
     title: 'Capacitaciones a escuelas',
+    seoTitle: 'Capacitaciones a escuelas sobre aprendizaje y neurodesarrollo',
     description: 'Propuestas de formación y asesoramiento para instituciones educativas, orientadas a profundizar conocimientos sobre aprendizaje y neurodesarrollo y brindar herramientas prácticas para el trabajo en el aula.',
     body: [
       'En CogniLab diseñamos propuestas de capacitación y asesoramiento para instituciones educativas, destinadas a docentes, equipos de orientación escolar y otros profesionales de la comunidad educativa.',

@@ -7,9 +7,13 @@ import Offers from '../components/Offers.astro';
 import Gallery from '../components/Gallery.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import { siteConfig } from '../data/site';
 ---
 
-<MainLayout>
+<MainLayout
+  title={`${siteConfig.name} | Psicología y psicopedagogía en Belgrano, CABA`}
+  description={`${siteConfig.description} En Belgrano, CABA.`}
+>
   <Header />
   <main>
     <Hero />

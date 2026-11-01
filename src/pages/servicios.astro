@@ -4,20 +4,13 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ServiceBody from '../components/ServiceBody.astro';
 import { services, siteConfig } from '../data/site';
-
-const accentColors = [
-  'var(--color-primary)',
-  'var(--color-secondary-strong)',
-  'var(--color-purple)',
-  'var(--color-pink)',
-  'var(--color-orange)',
-  'var(--color-secondary)'
-];
+import { serviceAccent } from '../utils/serviceAccent';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <MainLayout
-  title={`Servicios | ${siteConfig.name}`}
-  description="Conocé en detalle los servicios de psicología, psicopedagogía y orientación familiar que ofrece CogniLab."
+  title={`Servicios de psicología y psicopedagogía en Belgrano | ${siteConfig.name}`}
+  description="Evaluación neuropsicológica, tratamiento psicológico y psicopedagógico, orientación a padres, tutorías académicas y capacitaciones a escuelas, en Belgrano, CABA."
 >
   <Header />
 
@@ -26,10 +19,11 @@ const accentColors = [
       <div class="container">
         <h1 class="page-title" data-reveal>Servicios</h1>
         {services.map((service, i) => (
-          <article id={service.slug} class="service-item" style={`--accent: ${accentColors[i % accentColors.length]}`} data-reveal>
+          <article id={service.slug} class="service-item" style={`--accent: ${serviceAccent(i)}`} data-reveal>
             <div class="service-item-header">
               <div class="service-accent-bar"></div>
-              <h2>{service.title}</h2>
+              <!-- El título lleva a la página propia del servicio; se ve igual que antes -->
+              <h2><a href={`${base}/servicios/${service.slug}`}>{service.title}</a></h2>
             </div>
 
             <div class="service-item-body">
@@ -92,6 +86,18 @@ const accentColors = [
   .service-item-header h2 {
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     margin: 0;
+  }
+
+  .service-item-header h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .service-item-header h2 a:hover,
+  .service-item-header h2 a:focus-visible {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.2em;
   }
 
   /* Texto a un ancho de lectura cómodo */

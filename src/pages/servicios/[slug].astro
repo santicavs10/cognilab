@@ -1,0 +1,116 @@
+---
+// Página propia de cada servicio (/servicios/<slug>/): mismo contenido que la ventana "+ info",
+// con título y descripción propios para que Google pueda mostrarla en búsquedas de ese servicio.
+import MainLayout from '../../layouts/MainLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ServiceBody from '../../components/ServiceBody.astro';
+import { services, siteConfig } from '../../data/site';
+import type { Service } from '../../data/site';
+import { serviceAccent } from '../../utils/serviceAccent';
+
+export function getStaticPaths() {
+  return services.map((service, i) => ({ params: { slug: service.slug }, props: { service, index: i } }));
+}
+
+interface Props {
+  service: Service;
+  index: number;
+}
+const { service, index } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const seoTitle = service.seoTitle ?? `${service.title} en Belgrano, CABA`;
+---
+
+<MainLayout title={`${seoTitle} | ${siteConfig.name}`} description={service.description}>
+  <Header />
+
+  <main>
+    <section class="section service-page">
+      <div class="container">
+        <a class="service-page__back" href={`${base}/servicios`}>← Todos los servicios</a>
+
+        <article class="service-page__card" style={`--accent: ${serviceAccent(index)}`}>
+          <h1>{service.title}</h1>
+          <ServiceBody service={service} />
+
+          <div class="service-page__cta">
+            <a class="service-page__btn" href={`${base}/#contacto`}>Dejanos tu consulta</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</MainLayout>
+
+<style>
+  .service-page {
+    padding-top: 2rem;
+  }
+
+  .service-page__back {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .service-page__back:hover,
+  .service-page__back:focus-visible {
+    color: var(--color-text);
+  }
+
+  .service-page__card {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background: var(--color-surface-card);
+    border: 1px solid var(--color-border);
+    border-top: 0.45rem solid var(--accent);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .service-page__card h1 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    color: var(--color-text);
+  }
+
+  .service-page__cta {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .service-page__btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.8rem 1.6rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .service-page__btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+
+  .service-page__btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 600px) {
+    .service-page__card {
+      padding: 1.5rem 1.25rem;
+    }
+  }
+</style>
