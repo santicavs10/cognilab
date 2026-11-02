@@ -89,9 +89,9 @@ export const services: Service[] = [
   {
     slug: 'evaluacion-neuropsicologica',
     title: 'Evaluación neuropsicológica',
-    description: 'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo estas se manifiestan en diferentes ámbitos de la vida.',
+    description: 'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo se manifiestan en diferentes ámbitos de la vida.',
     body: [
-      'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo estas se manifiestan en diferentes ámbitos de la vida.',
+      'Realizamos evaluaciones neuropsicológicas para niños, adolescentes y adultos, con el objetivo de conocer su perfil de funcionamiento, identificar fortalezas y desafíos y comprender cómo se manifiestan en diferentes ámbitos de la vida.',
       'A través de entrevistas, observaciones clínicas, pruebas estandarizadas y cuestionarios, integramos información para comprender las necesidades de cada persona y orientar posibles intervenciones.'
     ],
     parts: [
