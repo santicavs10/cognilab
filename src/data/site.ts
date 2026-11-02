@@ -320,7 +320,7 @@ export const professionals = [
       'Integrante de la Unidad de Psicopedagogía del Hospital de Rehabilitación Manuel Rocca',
       'Miembro del Comité de Discapacidad Visual y Multideficiencias del Hospital Manuel Rocca',
       'Ex instructora de residentes del Hospital Manuel Rocca y ex residente de Psicopedagogía del Hospital Ramos Mejía',
-      'Experiencia en evaluaciones neuropsicológicas, evaluaciones del desarrollo y ADOS-2'
+      'Experiencia en evaluaciones neuropsicológicas, tratamiento psicopedagógico, evaluaciones del desarrollo y ADOS-2'
     ]
   },
   {
